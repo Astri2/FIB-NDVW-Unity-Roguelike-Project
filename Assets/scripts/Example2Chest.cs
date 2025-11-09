@@ -1,5 +1,4 @@
-﻿using Codice.Client.Common;
-using UnityEngine;
+﻿using UnityEngine;
 using Edgar.Unity.Examples;
 
 
@@ -9,6 +8,9 @@ using Edgar.Unity.Examples;
 public class Example2Chest : InteractableBase
 {
     public bool AlreadyOpened;
+
+    [SerializeField]
+    private Upgrade upgrade;
 
     /// <summary>
     /// Make sure to not make it possible to interact with the chest when it is already opened.
@@ -32,6 +34,8 @@ public class Example2Chest : InteractableBase
             gameObject.transform.Find("Open").gameObject.SetActive(true);
 
             //instanciate new upgrade
+            Upgrade up = GameObject.Instantiate(upgrade);
+            up.transform.position = this.transform.position + new Vector3(0,-0.6f,0);
             AlreadyOpened = true;
         }
     }
