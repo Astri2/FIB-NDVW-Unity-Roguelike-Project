@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Edgar.Unity.Examples;
+using System.Collections.Generic;
+using System.Linq;
 
 
 /// <summary>
@@ -9,6 +11,7 @@ public class Example2Chest : InteractableBase
 {
     public bool AlreadyOpened;
 
+    //switch to list in order to randomize the type of upgrade given
     [SerializeField]
     private Upgrade upgrade;
 
@@ -34,6 +37,7 @@ public class Example2Chest : InteractableBase
             gameObject.transform.Find("Open").gameObject.SetActive(true);
 
             //instanciate new upgrade
+            //int index = UnityEngine.Random.Range(0, upgrades.Count);
             Upgrade up = GameObject.Instantiate(upgrade);
             up.transform.position = this.transform.position + new Vector3(0,-0.6f,0);
             AlreadyOpened = true;

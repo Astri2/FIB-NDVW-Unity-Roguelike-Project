@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Sword : MeleeWeapon
+public class Spear : MeleeWeapon
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -11,7 +11,7 @@ public class Sword : MeleeWeapon
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public override void Attack()

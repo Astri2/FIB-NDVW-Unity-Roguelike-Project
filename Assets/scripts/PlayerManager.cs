@@ -1,4 +1,5 @@
 using Edgar.Unity.Examples;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -7,14 +8,49 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private IInteractable interactableInFocus;
+    public float MoveSpeed = 5f;
+
+    private Animator animator;
+    private Vector2 movement;
+    private new Rigidbody2D rigidbody;
+    private SpriteRenderer spriteRenderer;
+    private SpriteRenderer weaponRenderer;
     [SerializeField]
     private Weapon weapon;
+
+    public void Start()
+    {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
 
     /// <summary>
     /// If an interactable object is in focus and is allowed to interact, call its Interact() method.
     /// </summary>
     public void Update()
     {
+        movement.x = InputHelper.GetHorizontalAxis();
+        movement.y = InputHelper.GetVerticalAxis();
+
+#if UNITY_6000_0_OR_NEWER
+        animator.SetBool("running", rigidbody.linearVelocity.magnitude > float.Epsilon);
+#else
+        animator.SetBool("running", rigidbody.velocity.magnitude > float.Epsilon);
+#endif
+
+        // Flip sprite if needed
+        var flipSprite = spriteRenderer.flipX ? movement.x > 0.01f : movement.x < -0.01f;
+        if (flipSprite)
+        {
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            if (weapon != null) {
+                if (weapon is Sword) { weaponRenderer.flipX = !weaponRenderer.flipX; }
+                else if (weapon is Spear) { weaponRenderer.flipY = !weaponRenderer.flipY; }
+                
+            }
+        }
+
         if (interactableInFocus != null)
         {
             if (interactableInFocus.IsInteractionAllowed())
@@ -30,6 +66,10 @@ public class PlayerManager : MonoBehaviour
         }
 
         Attack();
+    }
+    public void FixedUpdate()
+    {
+        rigidbody.MovePosition(rigidbody.position + movement.normalized * MoveSpeed * Time.fixedDeltaTime);
     }
 
     /// <summary>
@@ -69,9 +109,12 @@ public class PlayerManager : MonoBehaviour
 
     public void Attack()
     {
-        if (InputHelper.GetKey(KeyCode.Mouse0))
+        if (InputHelper.GetKeyDown(KeyCode.Mouse0))
         {
-            Debug.Log("hiyah");
+            if (weapon != null)
+            {
+                weapon.gameObject.GetComponent<Weapon>().Attack();
+            }
         }
     }
 
@@ -83,5 +126,6 @@ public class PlayerManager : MonoBehaviour
     public void SetWeapon(Weapon weapon)
     {
         this.weapon = weapon;
+        weaponRenderer = weapon.GetComponent<SpriteRenderer>();
     }
 }
