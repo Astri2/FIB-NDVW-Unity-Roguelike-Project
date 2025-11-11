@@ -41,7 +41,6 @@ public class MeleeWeapon : Weapon
         else {
             Debug.Log("weapon is in cooldown");
         }
-        boxCollider.enabled = true;
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
@@ -51,8 +50,9 @@ public class MeleeWeapon : Weapon
 
     public IEnumerator AttackTimer()
     {
-        boxCollider.enabled = false;
+        boxCollider.enabled = true;
         Debug.Log("should enable collider");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.2f);
+        boxCollider.enabled = false;
     }
 }
