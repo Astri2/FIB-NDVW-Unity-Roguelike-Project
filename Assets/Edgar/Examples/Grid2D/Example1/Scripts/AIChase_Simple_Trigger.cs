@@ -9,10 +9,11 @@ public class AIChase_Simple_Trigger : MonoBehaviour
     public float speed = 3f; // Movement speed
 
     // This bool controls whether the enemy is allowed to chase or not
-    private bool canChase = false; 
+    private bool canChase = false;
 
     void Update()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         // Only try to move if the 'canChase' switch is ON
         // and we have a valid player reference
         if (canChase && player != null) 
