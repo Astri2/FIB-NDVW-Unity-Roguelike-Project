@@ -1,80 +1,151 @@
 using UnityEngine;
 
-public class AIChase_Simple_Trigger : MonoBehaviour
+public class AIEnemyWithVision : MonoBehaviour
 {
-    [Header("References")]
-    public Transform player; // Assign the player's Transform in the Inspector
-    
-    [Header("Settings")]
-    public float speed = 3f; // Movement speed
+    public enum EnemyState { Roaming, Patrolling, Chasing, ReturningToSpawn }
 
-    // This bool controls whether the enemy is allowed to chase or not
-    private bool canChase = false;
+    public Transform player;
+    public Transform[] patrolPoints;
+    public BoxCollider2D roomBounds;
+
+    public float roamingSpeed = 2f;
+    public float chasingSpeed = 3f;
+    public float roamingRadius = 2f;
+    public float roamingInterval = 3f;
+    public float detectionRange = 5f;
+    public float losePlayerRange = 7f;
+    public LayerMask obstacleMask;
+
+    private EnemyState currentState = EnemyState.Roaming;
+    private Vector3 spawnPoint;
+    private Vector3 roamingTarget;
+    private int patrolIndex = 0;
+    private float roamingTimer;
+
+    void Start()
+    {
+        spawnPoint = transform.position;
+        ChooseNewRoamingPoint();
+    }
 
     void Update()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        // Only try to move if the 'canChase' switch is ON
-        // and we have a valid player reference
-        if (canChase && player != null) 
-        {
-            // --- This is your original movement code ---
-            // It moves in a straight line towards the player,
-            // which works inside a single room with no obstacles.
-            
-            // Calculate direction to the player
-            Vector2 direction = (player.position - transform.position).normalized;
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-            // Move the enemy
-            transform.position = Vector2.MoveTowards(
-                transform.position,
-                player.position,
-                speed * Time.deltaTime
-            );
-            
-            // --- This is your original rotation code ---
-            // (I've uncommented it and fixed it slightly)
-            if (direction != Vector2.zero)
-            {
-                // Flip the sprite based on direction (basic)
-                if (direction.x > 0.01f)
-                {
-                    transform.localScale = new Vector3(1, 1, 1); // Facing right
-                }
-                else if (direction.x < -0.01f)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1); // Facing left
-                }
-            }
-            // ------------------------------------------
+        switch (currentState)
+        {
+            case EnemyState.Roaming:
+                Roaming();
+                break;
+            case EnemyState.Patrolling:
+                Patrolling();
+                break;
+            case EnemyState.Chasing:
+                Chasing();
+                break;
+            case EnemyState.ReturningToSpawn:
+                ReturningToSpawn();
+                break;
+        }
+
+        CheckPlayerVisibility();
+        StayInsideRoom();
+    }
+
+    void Roaming()
+    {
+        roamingTimer -= Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, roamingTarget, roamingSpeed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, roamingTarget) < 0.2f || roamingTimer <= 0f)
+        {
+            if (patrolPoints.Length > 0 && Random.value < 0.5f)
+                SwitchState(EnemyState.Patrolling);
+            else
+                ChooseNewRoamingPoint();
         }
     }
 
-    /// <summary>
-    /// This function is called by Unity when a Rigidbody2D ENTERS our trigger.
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D other)
+    void Patrolling()
     {
-        // Check if the object that entered is the Player
-        if (other.CompareTag("Player"))
+        if (patrolPoints.Length == 0)
         {
-            Debug.Log("Player ENTERED the trigger zone!");
-            // Turn the 'canChase' switch ON
-            canChase = true;
+            SwitchState(EnemyState.Roaming);
+            return;
+        }
+
+        transform.position = Vector2.MoveTowards(transform.position, patrolPoints[patrolIndex].position, roamingSpeed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, patrolPoints[patrolIndex].position) < 0.2f)
+        {
+            patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
+
+            if (Random.value < 0.3f)
+                SwitchState(EnemyState.Roaming);
         }
     }
 
-    /// <summary>
-    /// This function is called by Unity when a Rigidbody2D EXITS our trigger.
-    /// </summary>
-    private void OnTriggerExit2D(Collider2D other)
+    void Chasing()
     {
-        // Check if the object that left is the Player
-        if (other.CompareTag("Player"))
+        if (player == null)
         {
-            Debug.Log("Player LEFT the trigger zone!");
-            // Turn the 'canChase' switch OFF
-            canChase = false;
+            SwitchState(EnemyState.ReturningToSpawn);
+            return;
         }
+
+        transform.position = Vector2.MoveTowards(transform.position, player.position, chasingSpeed * Time.deltaTime);
+    }
+
+    void ReturningToSpawn()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, spawnPoint, roamingSpeed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, spawnPoint) < 0.2f)
+            SwitchState(EnemyState.Roaming);
+    }
+
+    void CheckPlayerVisibility()
+    {
+        if (player == null) return;
+
+        Vector2 direction = player.position - transform.position;
+        float distance = direction.magnitude;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, detectionRange, obstacleMask);
+        bool canSeePlayer = hit.collider == null || hit.collider.CompareTag("Player");
+
+        if (distance < detectionRange && canSeePlayer && currentState != EnemyState.Chasing)
+            SwitchState(EnemyState.Chasing);
+        else if ((distance > losePlayerRange || !canSeePlayer) && currentState == EnemyState.Chasing)
+            SwitchState(EnemyState.ReturningToSpawn);
+    }
+
+    void StayInsideRoom()
+    {
+        if (roomBounds == null) return;
+
+        Vector3 pos = transform.position;
+        Vector3 min = roomBounds.bounds.min;
+        Vector3 max = roomBounds.bounds.max;
+
+        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
+        pos.y = Mathf.Clamp(pos.y, min.y, max.y);
+
+        transform.position = pos;
+    }
+
+    void SwitchState(EnemyState newState)
+    {
+        currentState = newState;
+        if (newState == EnemyState.Roaming) ChooseNewRoamingPoint();
+    }
+
+    void ChooseNewRoamingPoint()
+    {
+        roamingTimer = roamingInterval;
+        Vector2 randomCircle = Random.insideUnitCircle * roamingRadius;
+        roamingTarget = spawnPoint + new Vector3(randomCircle.x, randomCircle.y, 0f);
     }
 }
+
