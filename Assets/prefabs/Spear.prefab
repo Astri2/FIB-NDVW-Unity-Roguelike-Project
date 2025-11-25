@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1888456842580889715}
   - component: {fileID: 523950661143295940}
   - component: {fileID: 2928038962270163674}
-  - component: {fileID: 8473625150026101023}
+  - component: {fileID: 4414454137924299683}
   m_Layer: 0
   m_Name: Spear
   m_TagString: Untagged
@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4730414138602445529}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0.7071068, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.0001, y: 1.58, z: 0}
-  m_LocalScale: {x: 0.42216718, y: 1.3501536, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.13, y: 2.13, z: 2.13}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1888456842580889715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
   cooldown: 5
   timer: 0
   boxCollider: {fileID: 2928038962270163674}
+  animator: {fileID: 4414454137924299683}
 --- !u!212 &523950661143295940
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -99,7 +100,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 09aaf0a42f003e24c8d5899ce77a0ba6, type: 2}
+  m_Sprite: {fileID: 5018245360316724722, guid: f0155685f410e4a43a957f998cd5eff5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -117,7 +118,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4730414138602445529}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -144,19 +145,19 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.7}
+  m_Offset: {x: 0.5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.96, y: 0.16}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 0.2}
   m_EdgeRadius: 0
---- !u!95 &8473625150026101023
+--- !u!95 &4414454137924299683
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -166,10 +167,10 @@ Animator:
   m_GameObject: {fileID: 4730414138602445529}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 236898c071d628b48bdb2885b3726cbd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1f0bad0c3ec618f42b86a068ae5de119, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0

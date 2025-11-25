@@ -15,6 +15,8 @@ public class PlayerManager : MonoBehaviour
     private new Rigidbody2D rigidbody;
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer weaponRenderer;
+    private BoxCollider2D weaponHitbox;
+    
     [SerializeField]
     private Weapon weapon;
 
@@ -45,8 +47,14 @@ public class PlayerManager : MonoBehaviour
         {
             spriteRenderer.flipX = !spriteRenderer.flipX;
             if (weapon != null) {
-                if (weapon is Sword) { weaponRenderer.flipX = !weaponRenderer.flipX; }
-                else if (weapon is Spear) { weaponRenderer.flipY = !weaponRenderer.flipY; }
+                if (weapon is Sword) { 
+                    weaponRenderer.flipX = !weaponRenderer.flipX;
+                    weaponHitbox.offset = -weaponHitbox.offset;
+                }
+                else if (weapon is Spear) { 
+                    weaponRenderer.flipX = !weaponRenderer.flipX;
+                    weaponHitbox.offset = -weaponHitbox.offset; 
+                }
                 
             }
         }
@@ -127,5 +135,6 @@ public class PlayerManager : MonoBehaviour
     {
         this.weapon = weapon;
         weaponRenderer = weapon.GetComponent<SpriteRenderer>();
+        weaponHitbox = weapon.GetComponent<BoxCollider2D>();
     }
 }

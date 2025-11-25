@@ -13,6 +13,8 @@ public class MeleeWeapon : Weapon
     public float timer = 0;
     [SerializeField]
     private BoxCollider2D boxCollider;
+    [SerializeField]
+    private Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,8 +53,10 @@ public class MeleeWeapon : Weapon
     public IEnumerator AttackTimer()
     {
         boxCollider.enabled = true;
+        animator.SetBool("Attacking", true);
         Debug.Log("should enable collider");
         yield return new WaitForSeconds(0.2f);
         boxCollider.enabled = false;
+        animator.SetBool("Attacking", false);
     }
 }
