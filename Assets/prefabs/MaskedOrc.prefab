@@ -202,4 +202,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Edgar.Unity.Examples::AIChase_Simple_Trigger
   player: {fileID: 0}
-  speed: 3
+  roomBounds: {fileID: 0}
+  roamingSpeed: 2
+  chasingSpeed: 3
+  roamingRadius: 2
+  roamingInterval: 3
+  patrolPointCount: 4
+  detectionRange: 5
+  losePlayerRange: 7
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0

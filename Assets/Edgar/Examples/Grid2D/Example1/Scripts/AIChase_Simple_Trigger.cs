@@ -1,17 +1,23 @@
 using UnityEngine;
 
-public class AIEnemyWithVision : MonoBehaviour
+public class AIChase_Simple_Trigger : MonoBehaviour
 {
     public enum EnemyState { Roaming, Patrolling, Chasing, ReturningToSpawn }
 
     public Transform player;
-    public Transform[] patrolPoints;
     public BoxCollider2D roomBounds;
 
+    [Header("Movement Settings")]
     public float roamingSpeed = 2f;
     public float chasingSpeed = 3f;
     public float roamingRadius = 2f;
     public float roamingInterval = 3f;
+
+    [Header("Patrol Settings")]
+    public int patrolPointCount = 4;      // Numero di waypoint da generare
+    private Vector3[] patrolPoints;       // Punti generati automaticamente
+
+    [Header("Vision Settings")]
     public float detectionRange = 5f;
     public float losePlayerRange = 7f;
     public LayerMask obstacleMask;
@@ -25,6 +31,7 @@ public class AIEnemyWithVision : MonoBehaviour
     void Start()
     {
         spawnPoint = transform.position;
+        GeneratePatrolPoints();
         ChooseNewRoamingPoint();
     }
 
@@ -35,23 +42,53 @@ public class AIEnemyWithVision : MonoBehaviour
 
         switch (currentState)
         {
-            case EnemyState.Roaming:
-                Roaming();
-                break;
-            case EnemyState.Patrolling:
-                Patrolling();
-                break;
-            case EnemyState.Chasing:
-                Chasing();
-                break;
-            case EnemyState.ReturningToSpawn:
-                ReturningToSpawn();
-                break;
+            case EnemyState.Roaming: Roaming(); break;
+            case EnemyState.Patrolling: Patrolling(); break;
+            case EnemyState.Chasing: Chasing(); break;
+            case EnemyState.ReturningToSpawn: ReturningToSpawn(); break;
         }
 
         CheckPlayerVisibility();
         StayInsideRoom();
     }
+
+    // ---------------------------------------------------------
+    // PATROL POINT GENERATION (SEMPRE DENTRO LA STANZA)
+    // ---------------------------------------------------------
+
+    void GeneratePatrolPoints()
+    {
+        patrolPoints = new Vector3[patrolPointCount];
+
+        for (int i = 0; i < patrolPointCount; i++)
+        {
+            patrolPoints[i] = GetRandomPointInsideRoom();
+        }
+    }
+
+    Vector3 GetRandomPointInsideRoom()
+    {
+        if (roomBounds == null)
+            return spawnPoint;
+
+        Bounds b = roomBounds.bounds;
+        Vector3 point;
+
+        // Genera punti fino a trovarne uno dentro il box
+        do
+        {
+            float x = Random.Range(b.min.x, b.max.x);
+            float y = Random.Range(b.min.y, b.max.y);
+            point = new Vector3(x, y, 0f);
+
+        } while (!b.Contains(point));
+
+        return point;
+    }
+
+    // ---------------------------------------------------------
+    // STATES LOGIC
+    // ---------------------------------------------------------
 
     void Roaming()
     {
@@ -75,9 +112,10 @@ public class AIEnemyWithVision : MonoBehaviour
             return;
         }
 
-        transform.position = Vector2.MoveTowards(transform.position, patrolPoints[patrolIndex].position, roamingSpeed * Time.deltaTime);
+        Vector3 target = patrolPoints[patrolIndex];
+        transform.position = Vector2.MoveTowards(transform.position, target, roamingSpeed * Time.deltaTime);
 
-        if (Vector2.Distance(transform.position, patrolPoints[patrolIndex].position) < 0.2f)
+        if (Vector2.Distance(transform.position, target) < 0.2f)
         {
             patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
 
@@ -105,6 +143,10 @@ public class AIEnemyWithVision : MonoBehaviour
             SwitchState(EnemyState.Roaming);
     }
 
+    // ---------------------------------------------------------
+    // VISION & ROOM LIMITS
+    // ---------------------------------------------------------
+
     void CheckPlayerVisibility()
     {
         if (player == null) return;
@@ -117,6 +159,7 @@ public class AIEnemyWithVision : MonoBehaviour
 
         if (distance < detectionRange && canSeePlayer && currentState != EnemyState.Chasing)
             SwitchState(EnemyState.Chasing);
+
         else if ((distance > losePlayerRange || !canSeePlayer) && currentState == EnemyState.Chasing)
             SwitchState(EnemyState.ReturningToSpawn);
     }
@@ -135,10 +178,16 @@ public class AIEnemyWithVision : MonoBehaviour
         transform.position = pos;
     }
 
+    // ---------------------------------------------------------
+    // UTILITIES
+    // ---------------------------------------------------------
+
     void SwitchState(EnemyState newState)
     {
         currentState = newState;
-        if (newState == EnemyState.Roaming) ChooseNewRoamingPoint();
+
+        if (newState == EnemyState.Roaming)
+            ChooseNewRoamingPoint();
     }
 
     void ChooseNewRoamingPoint()
@@ -147,5 +196,17 @@ public class AIEnemyWithVision : MonoBehaviour
         Vector2 randomCircle = Random.insideUnitCircle * roamingRadius;
         roamingTarget = spawnPoint + new Vector3(randomCircle.x, randomCircle.y, 0f);
     }
-}
 
+    
+    private void OnDrawGizmosSelected()
+    {
+        if (patrolPoints == null) return;
+
+        Gizmos.color = Color.yellow;
+
+        foreach (var p in patrolPoints)
+        {
+            Gizmos.DrawSphere(p, 0.15f);
+        }
+    }
+}
