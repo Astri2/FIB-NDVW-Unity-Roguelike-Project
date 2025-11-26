@@ -16,6 +16,9 @@ public class PlayerManager : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private SpriteRenderer weaponRenderer;
     private BoxCollider2D weaponHitbox;
+
+    [SerializeField]
+    private float hp;
     
     [SerializeField]
     private Weapon weapon;
@@ -25,6 +28,7 @@ public class PlayerManager : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
+        hp = 20;
     }
 
     /// <summary>
@@ -74,6 +78,10 @@ public class PlayerManager : MonoBehaviour
         }
 
         Attack();
+        if (hp <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
     public void FixedUpdate()
     {
@@ -136,5 +144,15 @@ public class PlayerManager : MonoBehaviour
         this.weapon = weapon;
         weaponRenderer = weapon.GetComponent<SpriteRenderer>();
         weaponHitbox = weapon.GetComponent<BoxCollider2D>();
+    }
+
+    public float GetHP()
+    {
+        return hp;
+    }
+
+    public void SetHP(float hp)
+    {
+        this.hp = hp;
     }
 }

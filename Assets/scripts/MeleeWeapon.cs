@@ -37,6 +37,7 @@ public class MeleeWeapon : Weapon
         {
             timer += cooldown;
             base.Attack();
+            animator.SetBool("Attacking", true);
             StartCoroutine(AttackTimer());
             Debug.Log("weapon attack");
         }
@@ -48,14 +49,24 @@ public class MeleeWeapon : Weapon
     public void OnTriggerEnter2D(Collider2D collider)
     {
         Debug.Log("weapon hit");
+        PlayerManager w = collider.gameObject.GetComponent<PlayerManager>();
+        AI_ChasingEnemy enemy = collider.gameObject.GetComponent<AI_ChasingEnemy>();
+        if (w != null)
+        {
+            w.SetHP(w.GetHP() - this.damage);
+        }
+        else if (enemy != null) { 
+            enemy.SetHP(enemy.GetHP() - this.damage);
+        }
+
+        
     }
 
     public IEnumerator AttackTimer()
     {
         boxCollider.enabled = true;
-        animator.SetBool("Attacking", true);
         Debug.Log("should enable collider");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         boxCollider.enabled = false;
         animator.SetBool("Attacking", false);
     }

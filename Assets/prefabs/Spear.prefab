@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Spear
   damage: 9
   speed: 1.5
-  cooldown: 5
+  cooldown: 2
   timer: 0
   boxCollider: {fileID: 2928038962270163674}
   animator: {fileID: 4414454137924299683}

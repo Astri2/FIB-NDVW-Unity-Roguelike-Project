@@ -1,3 +1,5 @@
+using System.Security.Cryptography.X509Certificates;
+using Unity.Jobs;
 using UnityEngine;
 
 public class AI_ChasingEnemy : MonoBehaviour
@@ -8,8 +10,19 @@ public class AI_ChasingEnemy : MonoBehaviour
     [Header("Settings")]
     public float speed = 3f; // Movement speed
 
+    [SerializeField]
+    private Weapon weapon;
+
+    [SerializeField]
+    private float hp;
+
     // This bool controls whether the enemy is allowed to chase or not
     private bool canChase = false;
+
+    public void Start()
+    {
+        hp = 20;
+    }
 
     void Update()
     {
@@ -22,14 +35,22 @@ public class AI_ChasingEnemy : MonoBehaviour
             // which works inside a single room with no obstacles.
 
             // Calculate direction to the player
-            Vector2 direction = (player.position - transform.position).normalized;
+            Vector2 dir = player.position - transform.position;
+            Vector2 direction = dir.normalized;
 
             // Move the enemy
-            transform.position = Vector2.MoveTowards(
-                transform.position,
-                player.position,
-                speed * Time.deltaTime
-            );
+            if (dir.magnitude > 1.0)
+            {
+                transform.position = Vector2.MoveTowards(
+                    transform.position,
+                    player.position,
+                    speed * Time.deltaTime
+                );
+            }
+            else {
+                weapon.Attack();
+            }
+
 
             // --- This is your original rotation code ---
             // (I've uncommented it and fixed it slightly)
@@ -46,6 +67,11 @@ public class AI_ChasingEnemy : MonoBehaviour
                 }
             }
             // ------------------------------------------
+        }
+
+        if(hp <= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 
@@ -75,5 +101,17 @@ public class AI_ChasingEnemy : MonoBehaviour
             // Turn the 'canChase' switch OFF
             canChase = false;
         }
+    }
+
+    public Weapon GetWeapon() { return weapon;}
+
+    public float GetHP()
+    {
+        return hp;
+    }
+
+    public void SetHP(float value)
+    {
+        hp = value;
     }
 }
