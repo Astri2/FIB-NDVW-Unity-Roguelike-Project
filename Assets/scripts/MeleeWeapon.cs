@@ -16,10 +16,12 @@ public class MeleeWeapon : Weapon
     [SerializeField]
     private Animator animator;
 
+    public bool isAttacking;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        isAttacking = false;
     }
 
     // Update is called once per frame
@@ -37,12 +39,7 @@ public class MeleeWeapon : Weapon
         {
             timer += cooldown;
             base.Attack();
-            animator.SetBool("Attacking", true);
             StartCoroutine(AttackTimer());
-            Debug.Log("weapon attack");
-        }
-        else {
-            Debug.Log("weapon is in cooldown");
         }
     }
 
@@ -51,11 +48,11 @@ public class MeleeWeapon : Weapon
         Debug.Log("weapon hit");
         PlayerManager w = collider.gameObject.GetComponent<PlayerManager>();
         AI_ChasingEnemy enemy = collider.gameObject.GetComponent<AI_ChasingEnemy>();
-        if (w != null)
+        if (w != null && isAttacking && !(w.IsParrying()))
         {
             w.SetHP(w.GetHP() - this.damage);
         }
-        else if (enemy != null) { 
+        else if (enemy != null && isAttacking) { 
             enemy.SetHP(enemy.GetHP() - this.damage);
         }
 
@@ -65,9 +62,11 @@ public class MeleeWeapon : Weapon
     public IEnumerator AttackTimer()
     {
         boxCollider.enabled = true;
-        Debug.Log("should enable collider");
-        yield return new WaitForSeconds(0.5f);
+        isAttacking = true;
+        animator.SetBool("Attacking", true);
+        yield return new WaitForSeconds(0.2f);
         boxCollider.enabled = false;
         animator.SetBool("Attacking", false);
+        isAttacking = false;
     }
 }

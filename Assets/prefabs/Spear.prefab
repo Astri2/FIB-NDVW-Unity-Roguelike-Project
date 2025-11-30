@@ -53,6 +53,7 @@ MonoBehaviour:
   timer: 0
   boxCollider: {fileID: 2928038962270163674}
   animator: {fileID: 4414454137924299683}
+  isAttacking: 0
 --- !u!212 &523950661143295940
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -118,7 +119,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4730414138602445529}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}

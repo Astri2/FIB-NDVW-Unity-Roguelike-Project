@@ -50,7 +50,7 @@ public class LeftClickUpgrade : Upgrade
                 weapon.transform.position = Player.transform.position + new Vector3(0, -0.35f, 0);
             }
             weapon.transform.SetParent(Player.transform);
-            Player.SetWeapon(weapon);
+            Player.SetLeftWeapon(weapon);
             Destroy(this.gameObject);
         }
     }

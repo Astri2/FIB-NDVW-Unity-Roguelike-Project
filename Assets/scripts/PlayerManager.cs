@@ -10,25 +10,45 @@ public class PlayerManager : MonoBehaviour
     private IInteractable interactableInFocus;
     public float MoveSpeed = 5f;
 
+    //general player stuff
     private Animator animator;
     private Vector2 movement;
     private new Rigidbody2D rigidbody;
     private SpriteRenderer spriteRenderer;
-    private SpriteRenderer weaponRenderer;
-    private BoxCollider2D weaponHitbox;
 
+    //health stuff
     [SerializeField]
-    private float hp;
-    
+    private float hp; 
     [SerializeField]
-    private Weapon weapon;
+    private float maxHp;
+
+    //weapons
+    [SerializeField]
+    private Weapon leftWeapon;
+    private SpriteRenderer leftWeaponRenderer;
+    private BoxCollider2D leftWeaponHitbox;
+    [SerializeField]
+    private Weapon rightWeapon;
+    private SpriteRenderer rightWeaponRenderer;
+    [SerializeField]
+    private Weapon spaceWeapon;
+
+    //defense
+    [SerializeField]
+    private bool isParrying = false;
+
+    //health
+    [SerializeField]
+    private RectTransform healthBar;
+    public float width, height;
 
     public void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
-        hp = 20;
+        maxHp = 20;
+        hp = maxHp;
     }
 
     /// <summary>
@@ -50,14 +70,14 @@ public class PlayerManager : MonoBehaviour
         if (flipSprite)
         {
             spriteRenderer.flipX = !spriteRenderer.flipX;
-            if (weapon != null) {
-                if (weapon is Sword) { 
-                    weaponRenderer.flipX = !weaponRenderer.flipX;
-                    weaponHitbox.offset = -weaponHitbox.offset;
+            if (leftWeapon != null) {
+                if (leftWeapon is Sword) { 
+                    leftWeaponRenderer.flipX = !leftWeaponRenderer.flipX;
+                    leftWeaponHitbox.offset = -leftWeaponHitbox.offset;
                 }
-                else if (weapon is Spear) { 
-                    weaponRenderer.flipX = !weaponRenderer.flipX;
-                    weaponHitbox.offset = -weaponHitbox.offset; 
+                else if (leftWeapon is Spear) { 
+                    leftWeaponRenderer.flipX = !leftWeaponRenderer.flipX;
+                    leftWeaponHitbox.offset = -leftWeaponHitbox.offset; 
                 }
                 
             }
@@ -74,10 +94,20 @@ public class PlayerManager : MonoBehaviour
                 interactableInFocus.EndInteract();
                 interactableInFocus = null;
             }
-
         }
 
-        Attack();
+        if (InputHelper.GetKeyDown(KeyCode.Mouse0) && !isParrying)
+        {
+            LeftAttack();
+        }
+        if (InputHelper.GetKeyDown(KeyCode.Mouse1) && !isParrying)
+        {
+            RightAttack();
+        }
+        if (InputHelper.GetKeyDown(KeyCode.Space) && !isParrying)
+        {
+            SpaceAttack();
+        }
         if (hp <= 0)
         {
             Destroy(this.gameObject);
@@ -85,7 +115,12 @@ public class PlayerManager : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        rigidbody.MovePosition(rigidbody.position + movement.normalized * MoveSpeed * Time.fixedDeltaTime);
+        this.Move(rigidbody.position + movement.normalized * MoveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void SetMoveSpeed(float val)
+    {
+        MoveSpeed = val;
     }
 
     /// <summary>
@@ -123,27 +158,93 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public void Move(Vector2 v)
     {
-        if (InputHelper.GetKeyDown(KeyCode.Mouse0))
+        rigidbody.MovePosition(v);
+    }
+
+    public Rigidbody2D GetRigidbody()
+    {
+        return rigidbody;
+    }
+
+    public SpriteRenderer GetRenderer()
+    {
+        return spriteRenderer;
+    }
+
+    public Vector2 GetMovement()
+    {
+        return movement;
+    }
+
+    public void SetMovement(Vector2 m)
+    {
+        this.movement = m;
+    }
+
+    public float GetHorizontalMovement()
+    {
+        return InputHelper.GetHorizontalAxis();
+    }
+
+    public float GetVerticalMovement()
+    {
+        return InputHelper.GetVerticalAxis();
+    }
+
+    public void LeftAttack()
+    {
+        if (leftWeapon != null)
         {
-            if (weapon != null)
-            {
-                weapon.gameObject.GetComponent<Weapon>().Attack();
-            }
+            leftWeapon.gameObject.GetComponent<Weapon>().Attack();
         }
     }
 
-    public Weapon GetWeapon()
+    public void RightAttack()
     {
-        return this.weapon;
+        if (rightWeapon != null)
+        {
+            rightWeapon.gameObject.GetComponent<Weapon>().Attack();
+        }
     }
 
-    public void SetWeapon(Weapon weapon)
+    public void SpaceAttack()
     {
-        this.weapon = weapon;
-        weaponRenderer = weapon.GetComponent<SpriteRenderer>();
-        weaponHitbox = weapon.GetComponent<BoxCollider2D>();
+        if(spaceWeapon != null)
+        {
+            spaceWeapon.gameObject.GetComponent<Weapon>().Attack();
+        }
+    }
+
+    public Weapon GetLeftWeapon()
+    {
+        return this.leftWeapon;
+    }
+
+    public Weapon GetRightWeapon() 
+    { 
+        return this.rightWeapon; 
+    }
+
+    public void SetLeftWeapon(Weapon weapon)
+    {
+        this.leftWeapon = weapon;
+        leftWeaponRenderer = weapon.GetComponent<SpriteRenderer>();
+        leftWeaponRenderer.flipX = spriteRenderer.flipX;
+        leftWeaponHitbox = weapon.GetComponent<BoxCollider2D>();
+    }
+
+    public void SetRightWeapon(Weapon weapon)
+    {
+        this.rightWeapon = weapon;
+        rightWeaponRenderer = weapon.GetComponent<SpriteRenderer>();
+        rightWeaponRenderer.flipX = spriteRenderer.flipX;
+    }
+
+    public void SetSpaceWeapon(Weapon weapon)
+    {
+        this.spaceWeapon = weapon;
     }
 
     public float GetHP()
@@ -154,5 +255,17 @@ public class PlayerManager : MonoBehaviour
     public void SetHP(float hp)
     {
         this.hp = hp;
+        float newWidth = (hp/maxHp)*width;
+        healthBar.sizeDelta = new Vector2(newWidth, height);
+    }
+
+    public bool IsParrying()
+    {
+        return isParrying;
+    }
+
+    public void SetParrying(bool val)
+    {
+        this.isParrying = val;
     }
 }
