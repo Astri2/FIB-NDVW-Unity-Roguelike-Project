@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Dash : MovementWeapon
@@ -17,11 +18,25 @@ public class Dash : MovementWeapon
         rb = playerManager.GetComponent<Rigidbody2D>();
     }
 
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.fixedDeltaTime;
+        }
+    }
+
     public override void Attack()
     {
-        base.Attack();
+        if (timer <= 0)
+        {
+            timer += base.cooldown;
+            base.Attack();
+            Debug.Log("movement");
 
-        StartCoroutine(AttackTimer());
+            StartCoroutine(AttackTimer());
+        }
     }
 
     public IEnumerator AttackTimer()
