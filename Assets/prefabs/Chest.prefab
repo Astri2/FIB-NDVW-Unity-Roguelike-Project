@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3303154016479813117, guid: b4cffa748a5dc3942a5af6182e8107a2, type: 3}
       propertyPath: m_Name
-      value: Chest Variant
+      value: Chest
       objectReference: {fileID: 0}
     - target: {fileID: 7532449400137518343, guid: b4cffa748a5dc3942a5af6182e8107a2, type: 3}
       propertyPath: m_SortingOrder
@@ -67,14 +67,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3303154016479813117, guid: b4cffa748a5dc3942a5af6182e8107a2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2737209032233072446}
+      addedObject: {fileID: -9119264155557313247}
   m_SourcePrefab: {fileID: 100100000, guid: b4cffa748a5dc3942a5af6182e8107a2, type: 3}
 --- !u!1 &4688648304749805973 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3303154016479813117, guid: b4cffa748a5dc3942a5af6182e8107a2, type: 3}
   m_PrefabInstance: {fileID: 7838029000197184616}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2737209032233072446
+--- !u!114 &-9119264155557313247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,6 +85,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72dca1c4a58f33f4cb3d918c68bc73cb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Example2Chest
+  m_EditorClassIdentifier: Assembly-CSharp::Chest
   AlreadyOpened: 0
-  upgrade: {fileID: 146120110015288763, guid: a9e2bc43a1596704a8faf7936e30e0bd, type: 3}
+  upgrades:
+  - {fileID: 146120110015288763, guid: a9e2bc43a1596704a8faf7936e30e0bd, type: 3}
+  - {fileID: 7788419565636463242, guid: 446555a4beb86ec4293f871ea7a71ead, type: 3}
+  - {fileID: 1852715836128995979, guid: 561752a588da9374fa6ed49a7f648b7b, type: 3}

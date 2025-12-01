@@ -171,5 +171,6 @@ MonoBehaviour:
   WeaponItem:
   - {fileID: 8986914484468709530, guid: 3b1320602b8d57a4481d45b1547c0442, type: 3}
   - {fileID: 3223000418501498809, guid: ce62944e8ce168743a820881a05ff759, type: 3}
+  - {fileID: 3902898774683985026, guid: 2d4fa8f2f202eff4fb2f93f278107fb4, type: 3}
   Player: {fileID: 0}
   AlreadyCollected: 0

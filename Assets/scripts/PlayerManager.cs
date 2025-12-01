@@ -42,6 +42,8 @@ public class PlayerManager : MonoBehaviour
     private RectTransform healthBar;
     public float width, height;
 
+    public int chestIndex = 0;
+
     public void Start()
     {
         animator = GetComponent<Animator>();
@@ -71,16 +73,12 @@ public class PlayerManager : MonoBehaviour
         {
             spriteRenderer.flipX = !spriteRenderer.flipX;
             if (leftWeapon != null) {
-                if (leftWeapon is Sword) { 
-                    leftWeaponRenderer.flipX = !leftWeaponRenderer.flipX;
-                    leftWeaponHitbox.offset = -leftWeaponHitbox.offset;
-                }
-                else if (leftWeapon is Spear) { 
-                    leftWeaponRenderer.flipX = !leftWeaponRenderer.flipX;
-                    leftWeaponHitbox.offset = -leftWeaponHitbox.offset; 
-                }
-                
+                leftWeaponRenderer.flipX = !leftWeaponRenderer.flipX;
+                leftWeaponHitbox.offset = -leftWeaponHitbox.offset;
+
             }
+
+
         }
 
         if (interactableInFocus != null)
@@ -226,6 +224,10 @@ public class PlayerManager : MonoBehaviour
     { 
         return this.rightWeapon; 
     }
+    public Weapon GetSpaceWeapon()
+    {
+        return this.spaceWeapon;
+    }
 
     public void SetLeftWeapon(Weapon weapon)
     {
@@ -238,7 +240,7 @@ public class PlayerManager : MonoBehaviour
     public void SetRightWeapon(Weapon weapon)
     {
         this.rightWeapon = weapon;
-        rightWeaponRenderer = weapon.GetComponent<SpriteRenderer>();
+        rightWeaponRenderer = weapon.GetComponentInChildren<SpriteRenderer>();
         rightWeaponRenderer.flipX = spriteRenderer.flipX;
     }
 
@@ -252,9 +254,18 @@ public class PlayerManager : MonoBehaviour
         return hp;
     }
 
+    public float GetMaxHP()
+    {
+        return maxHp;
+    }
+
     public void SetHP(float hp)
     {
         this.hp = hp;
+        if(hp > maxHp)
+        {
+            hp = maxHp;
+        }
         float newWidth = (hp/maxHp)*width;
         healthBar.sizeDelta = new Vector2(newWidth, height);
     }

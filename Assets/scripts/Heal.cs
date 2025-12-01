@@ -1,21 +1,13 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Dash : MovementWeapon
+public class Heal : DefensiveWeapon
 {
     [SerializeField]
     private PlayerManager playerManager;
-    [SerializeField]
-    private float distance;
-    [SerializeField]
-    private Rigidbody2D rb;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
-        rb = playerManager.GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
@@ -25,23 +17,21 @@ public class Dash : MovementWeapon
             timer -= Time.fixedDeltaTime;
         }
     }
-
     public override void Attack()
     {
         if (timer <= 0)
         {
             timer += base.cooldown;
             base.Attack();
-            Debug.Log("movement");
-
             StartCoroutine(AttackTimer());
         }
     }
 
     public IEnumerator AttackTimer()
     {
-        playerManager.SetMoveSpeed(5 * distance);
-        yield return new WaitForSeconds(0.1f);
-        playerManager.SetMoveSpeed(5f);
+        playerManager.GetRenderer().color = Color.green;
+        playerManager.SetHP(playerManager.GetHP() + Mathf.Min(playerManager.GetMaxHP()*0.3f, 8f));
+        yield return new WaitForSeconds(0.2f);
+        playerManager.GetRenderer().color = Color.white;
     }
 }
