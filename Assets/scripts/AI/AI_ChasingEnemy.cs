@@ -19,9 +19,12 @@ public class AI_ChasingEnemy : MonoBehaviour
     // This bool controls whether the enemy is allowed to chase or not
     private bool canChase = false;
 
+    public float scaling;
+
     public void Start()
     {
         hp = 20;
+        scaling = 1.0f;
     }
 
     void Update()
@@ -113,5 +116,15 @@ public class AI_ChasingEnemy : MonoBehaviour
     public void SetHP(float value)
     {
         hp = value;
+    }
+
+    public float GetScaling()
+    {
+        return scaling;
+    }
+
+    public void SetScaling(float val)
+    {
+        scaling = val;
     }
 }

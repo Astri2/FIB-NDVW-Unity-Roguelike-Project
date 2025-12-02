@@ -228,6 +228,8 @@ MonoBehaviour:
   - {fileID: 1571480981}
   - {fileID: 977893082}
   - {fileID: 1417112581}
+  Enemies:
+  - {fileID: 1402291788}
   index: 0
 --- !u!4 &341171527
 Transform:
@@ -883,6 +885,7 @@ MonoBehaviour:
   speed: 3
   weapon: {fileID: 1381195846}
   hp: 0
+  scaling: 0
 --- !u!4 &1402291789
 Transform:
   m_ObjectHideFlags: 0
