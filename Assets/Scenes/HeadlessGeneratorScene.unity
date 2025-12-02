@@ -403,7 +403,7 @@ MonoBehaviour:
     UseCorridors: 1
   GeneratorConfig:
     RootGameObject: {fileID: 0}
-    Timeout: 10000
+    Timeout: 5000
     RepeatModeOverride: 0
     MinimumRoomDistance: 1
     RoomTemplatePrefabMode: 0
@@ -434,7 +434,7 @@ MonoBehaviour:
   maxPathLength: 15
   numberOfFeatures: 4
   LoopWeight: 1
-  BranchWeight: 1
+  BranchWeight: 4
   DeadEndWeight: 1
   disableRight: 0
 --- !u!4 &1080008141

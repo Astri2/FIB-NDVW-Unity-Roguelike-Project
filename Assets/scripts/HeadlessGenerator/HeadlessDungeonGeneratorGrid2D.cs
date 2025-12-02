@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Edgar.Unity;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 class HeadlessDungeonGeneratorGrid2D: DungeonGeneratorBaseGrid2D
@@ -18,35 +14,22 @@ class HeadlessDungeonGeneratorGrid2D: DungeonGeneratorBaseGrid2D
     public int DeadEndWeight;
     public bool disableRight;
 
-    public new void Start()
-    {
-        // do nothing. I simply wanted to override the base one
-    }
+    // Override Start & Awake behavior
+    public new void Start() { }
+    public new void Awake() { }
 
-    public new void Awake()
+    public void GenerateGraph()
     {
+        // create the graph object
+        if(headlessGraph != null) ScriptableObject.Destroy(headlessGraph);
         headlessGraph = ScriptableObject.CreateInstance<HeadlessGraph>();
         this.FixedLevelGraphConfig.LevelGraph = headlessGraph;
 
-        // set the default connection template set of the whole graph 
-        // headlessGraph.CorridorRoomTemplateSets = new List<RoomTemplatesSet> { CorridorRoomTemplateSets };
-
-        /*
-        ARoom room1 = headlessGraph.CreateRoom<SpawnRoom>();
-        room1.distanceToSpawn = 0;
-        ARoom room2 = headlessGraph.CreateRoom<BasicRoom>();
-        room2.distanceToSpawn = 1;
-        ARoom room3 = headlessGraph.CreateRoom<BossRoom>();
-        room3.distanceToSpawn = 2;
-        
-        ACorridor connection1 = headlessGraph.CreateConnection<BasicCorridor>(room1, room2);
-        ACorridor connection2 = headlessGraph.CreateConnection<FancyCorridor>(room2, room3);
-        */
-
+        // update weights
         var weights = new List<int> { LoopWeight, BranchWeight, DeadEndWeight };
-        
-        HeadlessGraphGenerator gen = new HeadlessGraphGenerator(headlessGraph);
-        gen.GenerateDungeon(minPathLength, maxPathLength, numberOfFeatures, weights, disableRight);
+
+        // generate the graph
+        HeadlessGraphGenerator.GenerateDungeon(headlessGraph, minPathLength, maxPathLength, numberOfFeatures, weights, disableRight);
     }
 }
 

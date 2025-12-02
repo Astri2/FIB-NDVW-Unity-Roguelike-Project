@@ -5,25 +5,19 @@ using System.Linq;
 using UnityEngine;
 
 
-public class HeadlessGraphGenerator
+public static class HeadlessGraphGenerator
 {
-    private readonly HeadlessGraph headlessGraph;
-    private readonly System.Random rng = new System.Random();
+    private static readonly System.Random rng = new System.Random();
 
-    public HeadlessGraphGenerator(HeadlessGraph graph)
-    {
-        headlessGraph = graph;
-    }
-
-    public void GenerateDungeon(int minPathLength, int maxPathLength, int numberOfFeatures, List<int> featureWeights, bool disableRight)
+    public static void GenerateDungeon(HeadlessGraph graph, int minPathLength, int maxPathLength, int numberOfFeatures, List<int> featureWeights, bool disableRight)
     {
         int mainPathLength = rng.Next(minPathLength, maxPathLength);
 
         HashSet<int> left = new HashSet<int>(), right = new HashSet<int>();
 
         // --- Create main rooms ---
-        SpawnRoom spawnRoom = headlessGraph.CreateRoom<SpawnRoom>();
-        BossRoom bossRoom = headlessGraph.CreateRoom<BossRoom>();
+        SpawnRoom spawnRoom = graph.CreateRoom<SpawnRoom>();
+        BossRoom bossRoom = graph.CreateRoom<BossRoom>();
 
         List<ARoom> mainPath = new List<ARoom>();
         mainPath.Add(spawnRoom);
@@ -32,9 +26,9 @@ public class HeadlessGraphGenerator
         // remove 1 before & after because spawn/boss rooms
         for (int i = 1; i < mainPathLength - 1; i++)
         {
-            BasicRoom newRoom = headlessGraph.CreateRoom<BasicRoom>();
+            BasicRoom newRoom = graph.CreateRoom<BasicRoom>();
             newRoom.name = "Main: " + i.ToString();
-            headlessGraph.CreateConnection<BasicCorridor>(mainPath[i - 1], newRoom);
+            graph.CreateConnection<BasicCorridor>(mainPath[i - 1], newRoom);
             mainPath.Add(newRoom);
 
         }
@@ -51,9 +45,9 @@ public class HeadlessGraphGenerator
 
         var featureEntries = new List<(Func<int, bool>, float)>
         {
-            (roomNb => CreateLoop(mainPath, roomNb, ref left, ref right), featureWeights[0]),
-            (roomNb => CreateBranch(mainPath, roomNb, ref left, ref right), featureWeights[1]),
-            (roomNb => CreateDeadEnd(mainPath, roomNb, ref left, ref right), featureWeights[2])
+            (roomNb => CreateLoop(graph, mainPath, roomNb, ref left, ref right), featureWeights[0]),
+            (roomNb => CreateBranch(graph, mainPath, roomNb, ref left, ref right), featureWeights[1]),
+            (roomNb => CreateDeadEnd(graph, mainPath, roomNb, ref left, ref right), featureWeights[2])
         };
 
         for (int i = 0; i < numberOfFeatures; i++)
@@ -71,22 +65,22 @@ public class HeadlessGraphGenerator
         }
 
         // Final connection to boss
-        headlessGraph.CreateConnection<BasicCorridor>(mainPath[mainPath.Count - 1], bossRoom);
+        graph.CreateConnection<BasicCorridor>(mainPath[mainPath.Count - 1], bossRoom);
 
-        string dot = GraphVizExporter.ToDot(headlessGraph);
+        string dot = GraphVizExporter.ToDot(graph);
         File.WriteAllText("dungeon.dot", dot);
     }
 
-    private bool CreateDeadEnd(List<ARoom> mainPath, int rootNumber, ref HashSet<int> left, ref HashSet<int> right)
+    private static bool CreateDeadEnd(HeadlessGraph graph, List<ARoom> mainPath, int rootNumber, ref HashSet<int> left, ref HashSet<int> right)
     {
         // this cell is already taken on both sides
         if (left.Contains(rootNumber) && right.Contains(rootNumber))
         {
-            Debug.Log("Failed early to generate dead end on node: " + rootNumber.ToString());
+            // Debug.Log("Failed early to generate dead end on node: " + rootNumber.ToString());
             return false;
         }
 
-        Debug.Log("Dead end on node: " + rootNumber.ToString());
+        // Debug.Log("Dead end on node: " + rootNumber.ToString());
 
         ARoom origin = mainPath[rootNumber];
         int branchSize = rng.Next(1, 6);
@@ -94,11 +88,11 @@ public class HeadlessGraphGenerator
         ARoom current = origin;
         for (int i = 0; i < branchSize; i++)
         {
-            BasicRoom room = headlessGraph.CreateRoom<BasicRoom>();
+            BasicRoom room = graph.CreateRoom<BasicRoom>();
 
             // TODO: make this cleaner or remove. this is debug 
-            if (i == 0) headlessGraph.CreateConnection<FancyCorridor>(current, room);
-            else headlessGraph.CreateConnection<BasicCorridor>(current, room);
+            if (i == 0) graph.CreateConnection<FancyCorridor>(current, room);
+            else graph.CreateConnection<BasicCorridor>(current, room);
             current = room;
         }
 
@@ -107,16 +101,16 @@ public class HeadlessGraphGenerator
         return true;
     }
 
-    private bool CreateBranch(List<ARoom> mainPath, int rootNumber, ref HashSet<int> left, ref HashSet<int> right)
+    private static bool CreateBranch(HeadlessGraph graph, List<ARoom> mainPath, int rootNumber, ref HashSet<int> left, ref HashSet<int> right)
     {
         // this cell is already taken on both sides
         if (left.Contains(rootNumber) && right.Contains(rootNumber))
         {
-            Debug.Log("Failed early to generate branch on node: " + rootNumber.ToString());
+            //Debug.Log("Failed early to generate branch on node: " + rootNumber.ToString());
             return false;
         }
 
-        Debug.Log("Initiating branch from node : " + rootNumber.ToString());
+        //Debug.Log("Initiating branch from node : " + rootNumber.ToString());
 
         ARoom origin = mainPath[rootNumber];
         int branchSize = rng.Next(2, 6);
@@ -124,11 +118,11 @@ public class HeadlessGraphGenerator
         ARoom current = origin;
         for (int i = 0; i < branchSize; i++)
         {
-            BasicRoom room = headlessGraph.CreateRoom<BasicRoom>();
+            BasicRoom room = graph.CreateRoom<BasicRoom>();
 
             // TODO: make this cleaner or remove. this is debug 
-            if(i == 0) headlessGraph.CreateConnection<FancyCorridor>(current, room);
-            else headlessGraph.CreateConnection<BasicCorridor>(current, room);
+            if(i == 0) graph.CreateConnection<FancyCorridor>(current, room);
+            else graph.CreateConnection<BasicCorridor>(current, room);
             current = room;
         }
 
@@ -160,7 +154,7 @@ public class HeadlessGraphGenerator
             else continue;
 
             // This is a valid node to reattach the node
-            headlessGraph.CreateConnection<FancyCorridor>(current, mainPath[closeNumber]);
+            graph.CreateConnection<FancyCorridor>(current, mainPath[closeNumber]);
 
             // mark the side as used for the whole branch
             for(int i = minID; i < maxID; i++)
@@ -168,43 +162,43 @@ public class HeadlessGraphGenerator
                 if(useLeft) left.Add(i);
                 else right.Add(i);
             }
-            Debug.Log("Branch from node : " + minID.ToString() + " to node " + maxID.ToString());
+            //Debug.Log("Branch from node : " + minID.ToString() + " to node " + maxID.ToString());
             return true;
 
         } while (tries++ < 5);
 
-        Debug.Log("Failed to close branch" + rootNumber.ToString());
+        //Debug.Log("Failed to close branch" + rootNumber.ToString());
         return true; // true because it still generated a dead end
     }
 
-    private bool CreateLoop(List<ARoom> mainPath, int rootNumber, ref HashSet<int> left, ref HashSet<int> right)
+    private static bool CreateLoop(HeadlessGraph graph, List<ARoom> mainPath, int rootNumber, ref HashSet<int> left, ref HashSet<int> right)
     {
         // this cell is already taken on both sides
         if (left.Contains(rootNumber) && right.Contains(rootNumber))
         {
-            Debug.Log("Failed early to generate loop on node: " + rootNumber.ToString());
+            //Debug.Log("Failed early to generate loop on node: " + rootNumber.ToString());
             return false;
         }
 
-        Debug.Log("Cycle on node : " + rootNumber.ToString());
+        //Debug.Log("Cycle on node : " + rootNumber.ToString());
 
         ARoom origin = mainPath[rootNumber];
         int loopSize = rng.Next(4, 6);
 
         // store the first room of the branch for future looping
-        BasicRoom firstRoom = headlessGraph.CreateRoom<BasicRoom>();
-        headlessGraph.CreateConnection<FancyCorridor>(origin, firstRoom);
+        BasicRoom firstRoom = graph.CreateRoom<BasicRoom>();
+        graph.CreateConnection<FancyCorridor>(origin, firstRoom);
 
         ARoom previous = firstRoom;
         for (int i = 0; i < loopSize-1; i++)
         {
-            BasicRoom room = headlessGraph.CreateRoom<BasicRoom>();
-            headlessGraph.CreateConnection<BasicCorridor>(previous, room);
+            BasicRoom room = graph.CreateRoom<BasicRoom>();
+            graph.CreateConnection<BasicCorridor>(previous, room);
             previous = room;
         }
 
         // close the loop
-        headlessGraph.CreateConnection<BasicCorridor>(previous, firstRoom);
+        graph.CreateConnection<BasicCorridor>(previous, firstRoom);
 
         if (left.Contains(rootNumber)) return right.Add(rootNumber);
         else left.Add(rootNumber);
