@@ -14,8 +14,8 @@ public class AIChase_Simple_Trigger : MonoBehaviour
     public float roamingInterval = 3f;
 
     [Header("Patrol Settings")]
-    public int patrolPointCount = 4;      // Numero di waypoint da generare
-    private Vector3[] patrolPoints;       // Punti generati automaticamente
+    public int patrolPointCount = 4;      
+    private Vector3[] patrolPoints;       
 
     [Header("Vision Settings")]
     public float detectionRange = 5f;
@@ -52,10 +52,6 @@ public class AIChase_Simple_Trigger : MonoBehaviour
         StayInsideRoom();
     }
 
-    // ---------------------------------------------------------
-    // PATROL POINT GENERATION (SEMPRE DENTRO LA STANZA)
-    // ---------------------------------------------------------
-
     void GeneratePatrolPoints()
     {
         patrolPoints = new Vector3[patrolPointCount];
@@ -74,7 +70,7 @@ public class AIChase_Simple_Trigger : MonoBehaviour
         Bounds b = roomBounds.bounds;
         Vector3 point;
 
-        // Genera punti fino a trovarne uno dentro il box
+        
         do
         {
             float x = Random.Range(b.min.x, b.max.x);
@@ -86,9 +82,8 @@ public class AIChase_Simple_Trigger : MonoBehaviour
         return point;
     }
 
-    // ---------------------------------------------------------
+
     // STATES LOGIC
-    // ---------------------------------------------------------
 
     void Roaming()
     {
@@ -143,9 +138,8 @@ public class AIChase_Simple_Trigger : MonoBehaviour
             SwitchState(EnemyState.Roaming);
     }
 
-    // ---------------------------------------------------------
-    // VISION & ROOM LIMITS
-    // ---------------------------------------------------------
+    
+    // VISION AND ROOM LIMITS
 
     void CheckPlayerVisibility()
     {
@@ -178,9 +172,7 @@ public class AIChase_Simple_Trigger : MonoBehaviour
         transform.position = pos;
     }
 
-    // ---------------------------------------------------------
     // UTILITIES
-    // ---------------------------------------------------------
 
     void SwitchState(EnemyState newState)
     {
