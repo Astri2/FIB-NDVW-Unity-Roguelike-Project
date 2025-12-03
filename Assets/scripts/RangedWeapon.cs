@@ -3,11 +3,6 @@ using UnityEngine;
 public class RangedWeapon : Weapon
 {
     [SerializeField]
-    private float cooldown;
-
-    [SerializeField]
-    private float startTime;
-    [SerializeField]
     private GameObject projectile;
     [SerializeField]
     private Transform shotPos;
@@ -25,16 +20,19 @@ public class RangedWeapon : Weapon
 
     public void FixedUpdate()
     {
-        cooldown -= Time.fixedDeltaTime;
+        if (timer > 0)
+        {
+            timer -= Time.fixedDeltaTime;
+        }
     }
 
     public override void Attack()
     {
-        if (cooldown <= 0)
+        if (timer <= 0)
         {
+            timer += cooldown;
             base.Attack();
             GameObject.Instantiate(projectile, shotPos.position, transform.rotation);
-            cooldown = startTime;
         }
     }
 }

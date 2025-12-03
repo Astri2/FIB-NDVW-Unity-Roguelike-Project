@@ -9,9 +9,6 @@ public class MeleeWeapon : Weapon
     [SerializeField]
     private float speed;
     [SerializeField]
-    private float cooldown;
-    public float timer = 0;
-    [SerializeField]
     private BoxCollider2D boxCollider;
     [SerializeField]
     private Animator animator;
@@ -28,7 +25,7 @@ public class MeleeWeapon : Weapon
     public void FixedUpdate()
     {
         if (timer > 0) {
-            timer -= Time.fixedDeltaTime;
+            timer -= Time.fixedDeltaTime * speed;
         }
         //Debug.Log("weapon timer : " + timer);
     }
@@ -55,8 +52,6 @@ public class MeleeWeapon : Weapon
         else if (enemy != null && isAttacking) { 
             enemy.SetHP(enemy.GetHP() - this.damage);
         }
-
-        
     }
 
     public IEnumerator AttackTimer()

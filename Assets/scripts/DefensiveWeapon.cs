@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class DefensiveWeapon : Weapon
 {
-    [SerializeField]
-    public float cooldown;
-    public float timer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,9 +13,20 @@ public class DefensiveWeapon : Weapon
     {
         
     }
+    public void FixedUpdate()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.fixedDeltaTime;
+        }
+    }
 
     public override void Attack()
     {
-        base.Attack();
+        if (timer <= 0)
+        {
+            timer += cooldown;
+            base.Attack();
+        }
     }
 }

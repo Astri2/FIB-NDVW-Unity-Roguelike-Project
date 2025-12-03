@@ -37,21 +37,27 @@ public class LeftClickUpgrade : Upgrade
     {
         if (InputHelper.GetKey(KeyCode.E) && !AlreadyCollected)
         {
-            //instanciate new upgrade
-            AlreadyCollected = true;
-            int index = UnityEngine.Random.Range(0, WeaponItem.Count);
-            Weapon weapon = GameObject.Instantiate(WeaponItem[index]);
-            if (index == 0)
+            if(Player.GetLeftWeapon() == null)
             {
-                weapon.transform.position = Player.transform.position + new Vector3(0, -0.2f, 0);
+                //instanciate new upgrade
+                AlreadyCollected = true;
+                int index = UnityEngine.Random.Range(0, WeaponItem.Count);
+                Weapon weapon = GameObject.Instantiate(WeaponItem[index]);
+                if (index == 0)
+                {
+                    weapon.transform.position = Player.transform.position + new Vector3(0, -0.2f, 0);
+                }
+                else if (index == 1)
+                {
+                    weapon.transform.position = Player.transform.position + new Vector3(0, -0.35f, 0);
+                }
+                weapon.transform.SetParent(Player.transform);
+                Player.SetLeftWeapon(weapon);
+                Destroy(this.gameObject);
             }
-            else if (index == 1)
-            {
-                weapon.transform.position = Player.transform.position + new Vector3(0, -0.35f, 0);
-            }
-            weapon.transform.SetParent(Player.transform);
-            Player.SetLeftWeapon(weapon);
-            Destroy(this.gameObject);
+
+
+            
         }
     }
 

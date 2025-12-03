@@ -37,10 +37,31 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private bool isParrying = false;
 
-    //health
+    //healthbar
     [SerializeField]
     private RectTransform healthBar;
     public float width, height;
+
+    //melee stamina bar
+    [SerializeField]
+    private RectTransform BarMelee;
+    [SerializeField]
+    private RectTransform CooldownBarMelee;
+    public float widthMelee, heightMelee;
+
+    //ranged stamina bar
+    [SerializeField]
+    private RectTransform BarRanged;
+    [SerializeField]
+    private RectTransform CooldownBarRanged;
+    public float widthRanged, heightRanged;
+
+    //space stamina bar
+    [SerializeField]
+    private RectTransform BarSpace;
+    [SerializeField]
+    private RectTransform CooldownBarSpace;
+    public float widthSpace, heightSpace;
 
     public int chestIndex = 0;
 
@@ -75,10 +96,7 @@ public class PlayerManager : MonoBehaviour
             if (leftWeapon != null) {
                 leftWeaponRenderer.flipX = !leftWeaponRenderer.flipX;
                 leftWeaponHitbox.offset = -leftWeaponHitbox.offset;
-
             }
-
-
         }
 
         if (interactableInFocus != null)
@@ -93,6 +111,46 @@ public class PlayerManager : MonoBehaviour
                 interactableInFocus = null;
             }
         }
+
+        //weapon cooldown bar handling
+        if (leftWeapon == null)
+        {
+            BarMelee.localScale = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            BarMelee.localScale = new Vector3(1, 1, 1);
+            float newWidth = (leftWeapon.GetCooldown() / leftWeapon.GetTheoreticalCooldown()) * widthMelee;
+            if(newWidth > widthMelee) { newWidth = widthMelee; }
+            CooldownBarMelee.sizeDelta = new Vector2(newWidth, heightMelee);
+        }
+
+        //weapon cooldown bar handling
+        if (rightWeapon == null)
+        {
+            BarRanged.localScale = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            BarRanged.localScale = new Vector3(1, 1, 1);
+            float newWidth = (rightWeapon.GetCooldown() / rightWeapon.GetTheoreticalCooldown()) * widthRanged;
+            if (newWidth > widthRanged) { newWidth = widthRanged; }
+            CooldownBarRanged.sizeDelta = new Vector2(newWidth, heightRanged);
+        }
+
+        //weapon cooldown bar handling
+        if (spaceWeapon == null)
+        {
+            BarSpace.localScale = new Vector3(0, 0, 0);
+        }
+        else
+        {
+            BarSpace.localScale = new Vector3(1, 1, 1);
+            float newWidth = (spaceWeapon.GetCooldown() / spaceWeapon.GetTheoreticalCooldown()) * widthSpace;
+            if (newWidth > widthSpace) { newWidth = widthSpace; }
+            CooldownBarSpace.sizeDelta = new Vector2(newWidth, heightSpace);
+        }
+
 
         if (InputHelper.GetKeyDown(KeyCode.Mouse0) && !isParrying)
         {
@@ -241,7 +299,7 @@ public class PlayerManager : MonoBehaviour
     {
         this.rightWeapon = weapon;
         rightWeaponRenderer = weapon.GetComponentInChildren<SpriteRenderer>();
-        rightWeaponRenderer.flipX = spriteRenderer.flipX;
+        //rightWeaponRenderer.flipX = spriteRenderer.flipX;
     }
 
     public void SetSpaceWeapon(Weapon weapon)
