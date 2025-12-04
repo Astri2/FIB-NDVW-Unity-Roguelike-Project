@@ -32,7 +32,7 @@ MonoBehaviour:
   CorridorIndividualRoomTemplates: []
   CorridorRoomTemplateSets: []
   DefaultIndividualRoomTemplates:
-  - {fileID: 3389223618570058147, guid: a9b2d81dd73aaea499a6c549d412e0f3, type: 3}
+  - {fileID: 3389223618570058147, guid: 91e03cc0a45be584d9f8f23edb8a81d2, type: 3}
   DefaultRoomTemplateSets: []
   Rooms:
   - {fileID: -2090466219816417908}

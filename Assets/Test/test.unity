@@ -302,7 +302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a84344fc17d12148866b7ac03b036fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testPos: {fileID: 4635276658050012398, guid: facb27d28c2e95540bc05a0e8e3cbad6, type: 3}
   enemies:
   - {fileID: -3540149406593638917, guid: 1786f24685cb8c74e913afd05f231dc3, type: 3}
   - {fileID: -7920275183799078765, guid: e4642542c7e80bc48b9b2b789af3fa4d, type: 3}

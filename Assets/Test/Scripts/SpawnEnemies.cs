@@ -1,22 +1,19 @@
 using UnityEngine;
 using Edgar.Unity;
-using UnityEngine.UIElements;
 
 using System.Collections.Generic;
-using Vector2Int = UnityEngine.Vector2Int;
 using System.Linq;
-using Unity.VisualScripting;
+using UnityEngine.Tilemaps;
 
 public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
 {
-    
-
-    public GameObject testPos;
+    // List of enemies prefabs
     public List<Enemies> enemies;
-    // private List<Vector2Int> positions = new List<Vector2Int>();
-    private List<GameObject> debugEnemies = new List<GameObject>();
 
+    // used for gizmos
+    private List<GameObject> debugEnemies = new List<GameObject>();
     private DungeonGeneratorLevelGrid2D lvl;
+    private Vector3 dungeonCenteringShift;
 
     public override void Run(DungeonGeneratorLevelGrid2D level)
     {
@@ -25,25 +22,29 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
 
     private void HandleEnemies(DungeonGeneratorLevelGrid2D level)
     {
-        GameObject ennemisGO = new GameObject("Ennemis");
-        lvl = level;
         
-        int budget = 2;
+        lvl = level;
+        // every child of the rootGameObject is moved to center the dungeon.
+        dungeonCenteringShift = level.RootGameObject.transform.GetChild(0).transform.position;
+
+        // Remove any existing enemies holder
+        GameObject enemiesGO = level.RootGameObject.transform.Find("Enemies")?.gameObject;
+        if (enemiesGO != null) Destroy(enemiesGO);
+
+        // GO at the root that will store all the ennemies
+        enemiesGO = new GameObject("Enemies");
+        enemiesGO.transform.position = dungeonCenteringShift;
+        enemiesGO.transform.SetParent(level.RootGameObject.transform);
+
+        int budget = 8;
         // Iterate through all the rooms
-        foreach (var roomInstance in level.RoomInstances)
+        foreach (RoomInstanceGrid2D roomInstance in level.RoomInstances)
         {
-
             if (roomInstance.IsCorridor) continue;
+           
+            // decide on enemies to spawn
 
-            // debug
-            /*for(int i = 0; i< roomInstance.OutlinePolygon.GetCornerPoints().Count; i++)
-            {
-                Object.Instantiate(testPos, new Vector3(roomInstance.OutlinePolygon.GetCornerPoints()[i][0], roomInstance.OutlinePolygon.GetCornerPoints()[i][1], 0), Quaternion.identity);
-            
-            }
-            Debug.Log(level.RootGameObject.transform.position);*/
-
-            int budgetRoom = budget;
+            int budgetRoom = budget; // TODO: room.prefab.getBudget
             List<GameObject> choosenEnemies = new List<GameObject>();
             int nbCandidates;
             while (true)
@@ -54,95 +55,58 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
                 if (nbCandidates == 0) break;
 
                 Enemies enemy = enemyCandidates[Random.Next(0, nbCandidates)];
-                choosenEnemies.Add(enemy.GameObject());
+                choosenEnemies.Add(enemy.gameObject);
                 budgetRoom -= enemy.cost;
             }
 
+            // decide on spawn points
 
-
+            Tilemap[] tilemapsWithCollider = { level.GetSharedTilemaps()[1], level.GetSharedTilemaps()[2] };
             // random position
             List<Vector2Int> outlinePts = roomInstance.OutlinePolygon.GetOutlinePoints();
             List<Vector2Int> allPts = roomInstance.OutlinePolygon.GetAllPoints();
-            List<Vector2Int> pts = allPts.Except(outlinePts).ToList();
+            List<Vector2Int> pts = allPts
+                .Except(outlinePts) // remove outside points
+                .Where(pts => PositionLibre(pts, tilemapsWithCollider)) // filter inside walls/collidables
+                .ToList(); // List of all available spawn points
 
-            //positions.Clear();
-           
+            HashSet<Vector2Int> spawnPoints = new HashSet<Vector2Int>();
             foreach (var enemy in choosenEnemies)
             {
-
-                /*Vector2Int position;
-                int attempts = 0;
-                do
-                {
-                    position = pts[Random.Next(0, pts.Count)];
-                    attempts++;
-                    if (attempts == 5) break;
-                } while (!FreePos(position));
-
-                positions.Add(position);
-                
-
-                if(attempts < 5)
-                {
-                    Object.Instantiate(enemy, new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity, ennemisGO.transform);
-                }
-*/
-                Vector2 position;
+                Vector2Int position;
                 
                 for (int attempts = 0 ; attempts < 5; attempts++)
                 {
                     position = pts[Random.Next(0, pts.Count)];
                     
-                    if (PositionLibre(position, enemy))
-                    {
-                       
-                        GameObject debugEnemy = Object.Instantiate(enemy, new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity, ennemisGO.transform);
-                        debugEnemies.Add(debugEnemy);
-                        break;
-                    }
+                    if (spawnPoints.Contains(position)) continue; // an ennemy is already here
+                    
+                    spawnPoints.Add(position);
+
+                    Vector3 actualSpawnPos = new Vector3(position.x + 0.5f, position.y + 0.5f, 0) + dungeonCenteringShift;
+                    GameObject debugEnemy = Object.Instantiate(enemy, actualSpawnPos, Quaternion.identity, enemiesGO.transform);
+                    debugEnemies.Add(debugEnemy);
+                    break;
                 }
-               
-
             }
-
 
             budget +=2;
         }
     }
 
     // check if the position is free or not
-    /*private bool FreePos(Vector2Int position)
+    bool PositionLibre(Vector2Int position, Tilemap[] tilemapColliders)
     {
-        foreach (var pos in positions)
+        foreach(Tilemap tilemap in tilemapColliders)
         {
-            if ((pos - position).magnitude < 2) return false;
+            Vector3Int pInt = new Vector3Int(position.x, position.y, 0);
+            TileBase t = tilemap.GetTile(pInt);
+            if (t != null) return false;
         }
         return true;
-
-    }*/
-    
-    bool PositionLibre(Vector2 position, GameObject enemy)
-    {
-        BoxCollider2D col = enemy.GetComponent<BoxCollider2D>();
-        Vector2 sizeCol = col.size;
-        //float radius = Mathf.Max(sizeCol.x, sizeCol.y)/2.0f;
-        Vector2 offset = col.offset;
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(position + offset, sizeCol, 0, LayerMask.GetMask("Default"));
-        //Collider2D[] colliders = Physics2D.OverlapCircleAll(position, radius, LayerMask.GetMask("Default"));
-        
-        int nbColliders = colliders.Length;
-        Debug.Log("nbColliders = " + nbColliders);
-        
-        foreach (var c in colliders)
-        {
-            Debug.Log("collider name = " + c.name);
-        }
-        
-       
-        return nbColliders == 0;
     }
 
-    private void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         
         if (lvl == null) return;
@@ -152,14 +116,16 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
             List<Vector2Int> pts = roomInstance.OutlinePolygon.GetAllPoints();
             for(int i = 0; i<pts.Count; i++)
             {
-                Gizmos.DrawSphere(new Vector3(pts[i].x+0.5f, pts[i].y+0.5f, 0), 0.1f);
+                Vector3 pos = new Vector3(pts[i].x + 0.5f, pts[i].y + 0.5f, 0) + dungeonCenteringShift;
+                Gizmos.DrawSphere(pos, 0.1f);
             }
 
             Gizmos.color = Color.red;
             List<Vector2Int> outlinePts = roomInstance.OutlinePolygon.GetOutlinePoints();
             for (int i = 0; i < outlinePts.Count; i++)
             {
-                Gizmos.DrawSphere(new Vector3(outlinePts[i].x+0.5f, outlinePts[i].y+ 0.5f, 0), 0.1f);
+                Vector3 pos = new Vector3(outlinePts[i].x + 0.5f, outlinePts[i].y + 0.5f, 0) + dungeonCenteringShift;
+                Gizmos.DrawSphere(pos, 0.1f);
             }
 
         }
