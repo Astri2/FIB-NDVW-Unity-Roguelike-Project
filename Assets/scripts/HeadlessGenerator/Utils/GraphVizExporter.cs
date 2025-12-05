@@ -1,5 +1,9 @@
 ﻿using System.Text;
 
+
+// To export to png
+// dot -Tpng dungeon.dot -o dungeon.png
+
 public static class GraphVizExporter
 {
     public static string ToDot(HeadlessGraph graph)
@@ -13,11 +17,19 @@ public static class GraphVizExporter
         {
             string id = room.GetHashCode().ToString();
             string label =
-                room is SpawnRoom ? "Spawn" :
-                room is BossRoom ? "Boss" :
-                room.name;
+                room is SpawnRoom ? "Spawn\n" :
+                room is BossRoom ? "Boss\n" :
+                room.name + "\n";
+            label += "dist: " + ((ARoom)room).distanceToSpawn.ToString();
+            label += "\nbudget: " + ((ARoom)room).enemiesBudget.ToString();
 
-            sb.AppendLine($"    {id} [label=\"{label}\"];");
+            string color =
+                room is SpawnRoom ? "green" :
+                room is BossRoom ? "red" :
+                room.name != "" ? "orange" : // main path basic rooms (ugly check tbf)
+                "black";
+
+            sb.AppendLine($"    {id} [label=\"{label}\" color=\"{color}\"];");
         }
 
         // --- Edges ---

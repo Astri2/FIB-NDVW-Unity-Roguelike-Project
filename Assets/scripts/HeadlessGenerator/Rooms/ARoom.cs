@@ -3,5 +3,7 @@ using UnityEngine;
 
 public abstract class ARoom : Room
 {
-    public int distanceToSpawn;
+
+    public int distanceToSpawn = -1;
+    public int enemiesBudget = 0;
 }

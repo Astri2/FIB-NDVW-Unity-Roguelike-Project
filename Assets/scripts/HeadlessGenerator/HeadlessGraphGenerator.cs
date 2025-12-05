@@ -30,7 +30,6 @@ public static class HeadlessGraphGenerator
             newRoom.name = "Main: " + i.ToString();
             graph.CreateConnection<BasicCorridor>(mainPath[i - 1], newRoom);
             mainPath.Add(newRoom);
-
         }
 
         if(disableRight)
@@ -55,7 +54,6 @@ public static class HeadlessGraphGenerator
             // First, choose the feature type
             var featureEntry = WeightedRandom.Choose(featureEntries);
 
-
             for (int _ = 0; _ < 5; _++)
             {
                 int roomNumber = rng.Next(mainPath.Count);
@@ -66,6 +64,8 @@ public static class HeadlessGraphGenerator
 
         // Final connection to boss
         graph.CreateConnection<BasicCorridor>(mainPath[mainPath.Count - 1], bossRoom);
+
+        SetBudget(graph, spawnRoom, bossRoom);
 
         string dot = GraphVizExporter.ToDot(graph);
         File.WriteAllText("dungeon.dot", dot);
@@ -205,5 +205,46 @@ public static class HeadlessGraphGenerator
 
         return true;
 
+    }
+
+    private static void SetBudget(HeadlessGraph graph, ARoom spawnRoom, ARoom bossRoom)
+    {
+        Queue<(ARoom, int)> toExplore = new Queue<(ARoom, int)>();
+        HashSet<ARoom> visited = new HashSet<ARoom>();
+
+        toExplore.Enqueue((spawnRoom, 0));
+        visited.Add(spawnRoom);
+
+        while (toExplore.Count != 0)
+        {
+            (ARoom,int) tuple = toExplore.Dequeue();
+            ARoom room = tuple.Item1;
+            int depth = tuple.Item2;
+            
+            room.distanceToSpawn = depth;
+            room.enemiesBudget = 2 * depth;
+
+            // +/- 10% difficulty
+            double rngFactor = -0.2 + rng.NextDouble() * 0.4;
+            room.enemiesBudget = (int)Math.Round(room.enemiesBudget * (1 + rngFactor));
+
+            var neighbors =
+                graph.Connections
+                    .Where(connection => connection.From == room && !visited.Contains(connection.To))
+                    .Select(connection => connection.To)
+                .Union(graph.Connections
+                    .Where(connection => connection.To == room && !visited.Contains(connection.From))
+                    .Select(connection => connection.From)
+                );
+
+            foreach (ARoom neighbor in neighbors)
+            {
+                toExplore.Enqueue((neighbor, depth+1));
+                visited.Add(neighbor);
+            }
+        }
+    
+        // burst of difficulty for boss room
+        bossRoom.enemiesBudget *= 2;
     }
 }
