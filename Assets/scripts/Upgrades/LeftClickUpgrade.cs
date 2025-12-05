@@ -37,10 +37,10 @@ public class LeftClickUpgrade : Upgrade
     {
         if (InputHelper.GetKey(KeyCode.E) && !AlreadyCollected)
         {
-            if(Player.GetLeftWeapon() == null)
+            //instanciate new upgrade
+            AlreadyCollected = true;
+            if (Player.GetLeftWeapon() == null)
             {
-                //instanciate new upgrade
-                AlreadyCollected = true;
                 int index = UnityEngine.Random.Range(0, WeaponItem.Count);
                 Weapon weapon = GameObject.Instantiate(WeaponItem[index]);
                 if (index == 0)
@@ -53,11 +53,12 @@ public class LeftClickUpgrade : Upgrade
                 }
                 weapon.transform.SetParent(Player.transform);
                 Player.SetLeftWeapon(weapon);
-                Destroy(this.gameObject);
             }
-
-
-            
+            else
+            {
+                Player.GetLeftWeapon().Scale();
+            }
+            Destroy(this.gameObject);
         }
     }
 

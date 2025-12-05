@@ -38,18 +38,33 @@ public class RightClickUpgrade : Upgrade
         {
             //instanciate new upgrade
             AlreadyCollected = true;
-            int index = UnityEngine.Random.Range(0, WeaponItem.Count);
-            Weapon weapon = GameObject.Instantiate(WeaponItem[index]);
-            if (index == 0)
+            if(Player.GetRightWeapon() == null)
             {
-                weapon.transform.position = Player.transform.position + new Vector3(0, -0.2f, 0);
+                int index = UnityEngine.Random.Range(0, WeaponItem.Count);
+                Weapon weapon = GameObject.Instantiate(WeaponItem[index]);
+                if (index == 0)
+                {
+                    weapon.transform.position = Player.transform.position + new Vector3(0, -0.2f, 0);
+                }
+                else if (index == 1)
+                {
+                    weapon.transform.position = Player.transform.position + new Vector3(0, -0.35f, 0);
+                }
+                weapon.transform.SetParent(Player.transform);
+                Player.SetRightWeapon(weapon);
             }
-            else if (index == 1)
+            else
             {
-                weapon.transform.position = Player.transform.position + new Vector3(0, -0.35f, 0);
+                if(Player.GetRightWeapon() is RangedWeapon) 
+                {
+                    //need explicit call of RangedWeapon Scale method for projectile scaling
+                    ((RangedWeapon)Player.GetRightWeapon()).Scale();
+                }
+                else
+                {
+                    Player.GetRightWeapon().Scale();
+                }
             }
-            weapon.transform.SetParent(Player.transform);
-            Player.SetRightWeapon(weapon);
             Destroy(this.gameObject);
         }
     }

@@ -40,20 +40,28 @@ public class SpaceBarUpgrade : Upgrade
             AlreadyCollected = true;
             bool cont = true;
             int index = 0;
-            while (cont)
+            if(Player.GetSpaceWeapon() == null)
             {
-                cont = false;
-                index = UnityEngine.Random.Range(0, WeaponItem.Count);
-                //disallow instantiation of the same type of upgrade for both right click and spacebar
-                if (Player.GetRightWeapon() != null && Player.GetRightWeapon().GetType() == WeaponItem[index].GetType())
+                while (cont)
                 {
-                    cont = true;
+                    cont = false;
+                    index = UnityEngine.Random.Range(0, WeaponItem.Count);
+                    //disallow instantiation of the same type of upgrade for both right click and spacebar
+                    if (Player.GetRightWeapon() != null && Player.GetRightWeapon().GetType() == WeaponItem[index].GetType())
+                    {
+                        cont = true;
+                    }
                 }
+
+                Weapon weapon = GameObject.Instantiate(WeaponItem[index]);
+                weapon.transform.SetParent(Player.transform);
+                Player.SetSpaceWeapon(weapon);
             }
-            
-            Weapon weapon = GameObject.Instantiate(WeaponItem[index]);
-            weapon.transform.SetParent(Player.transform);
-            Player.SetSpaceWeapon(weapon);
+            else
+            {
+                Player.GetSpaceWeapon().Scale();
+                Player.ScaleHP();
+            }
             Destroy(this.gameObject);
         }
     }

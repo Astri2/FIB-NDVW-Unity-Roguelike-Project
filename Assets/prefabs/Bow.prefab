@@ -138,8 +138,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bow
   cooldown: 1
   timer: 0
+  speed: 1
   projectile: {fileID: 5383575032014085527, guid: 00ee1aae85295314c9eacd6b6cf1dc98, type: 3}
   shotPos: {fileID: 1682340705809057839}
+  projScript: {fileID: -6705096782060842936, guid: 00ee1aae85295314c9eacd6b6cf1dc98, type: 3}
   offset: -90
 --- !u!1 &6851213042132625237
 GameObject:

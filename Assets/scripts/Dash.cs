@@ -22,7 +22,7 @@ public class Dash : MovementWeapon
     {
         if (timer > 0)
         {
-            timer -= Time.fixedDeltaTime;
+            timer -= Time.fixedDeltaTime * speed;
         }
     }
 

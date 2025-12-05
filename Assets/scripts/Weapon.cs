@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public float damage;
+    public float speed;
     [SerializeField]
     public float cooldown;
     public float timer = 0;
@@ -29,5 +31,10 @@ public class Weapon : MonoBehaviour
     public float GetTheoreticalCooldown()
     {
         return cooldown;
+    }
+    public void Scale()
+    {
+        damage = 1.15f * damage;
+        speed = 1.15f * speed;
     }
 }

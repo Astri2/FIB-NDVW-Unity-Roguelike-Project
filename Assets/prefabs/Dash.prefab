@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1895342e7292442af601d9d262f67f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dash
-  speed: 0
   cooldown: 3
   timer: 0
+  speed: 1
   playerManager: {fileID: 0}
   distance: 5
   rb: {fileID: 0}

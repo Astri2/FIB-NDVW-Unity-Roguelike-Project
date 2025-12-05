@@ -328,6 +328,15 @@ public class PlayerManager : MonoBehaviour
         healthBar.sizeDelta = new Vector2(newWidth, height);
     }
 
+    public void ScaleHP()
+    {
+        this.hp += 5;
+        this.maxHp += 5;
+
+        float newWidth = (hp / maxHp) * width;
+        healthBar.sizeDelta = new Vector2(newWidth, height);
+    }
+
     public bool IsParrying()
     {
         return isParrying;

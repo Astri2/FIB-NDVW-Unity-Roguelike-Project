@@ -14,7 +14,7 @@ public class Heal : DefensiveWeapon
     {
         if (timer > 0)
         {
-            timer -= Time.fixedDeltaTime;
+            timer -= Time.fixedDeltaTime*speed;
         }
     }
     public override void Attack()

@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4975cff7a4212e346b71e4ae68bc9e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Parry
+  cooldown: 2
+  timer: 0
+  speed: 1
   playerManager: {fileID: 0}

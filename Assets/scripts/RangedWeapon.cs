@@ -6,6 +6,8 @@ public class RangedWeapon : Weapon
     private GameObject projectile;
     [SerializeField]
     private Transform shotPos;
+    [SerializeField]
+    private BowProjectile projScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,7 +24,7 @@ public class RangedWeapon : Weapon
     {
         if (timer > 0)
         {
-            timer -= Time.fixedDeltaTime;
+            timer -= Time.fixedDeltaTime * speed;
         }
     }
 
@@ -34,5 +36,11 @@ public class RangedWeapon : Weapon
             base.Attack();
             GameObject.Instantiate(projectile, shotPos.position, transform.rotation);
         }
+    }
+
+    public void Scale()
+    {
+        projScript.SetDamage(projScript.GetDamage() * 1.15f);
+        speed = 1.15f * speed;
     }
 }

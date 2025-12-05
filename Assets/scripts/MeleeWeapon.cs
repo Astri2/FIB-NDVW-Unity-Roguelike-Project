@@ -5,10 +5,6 @@ using UnityEngine;
 public class MeleeWeapon : Weapon
 {
     [SerializeField]
-    private float damage;
-    [SerializeField]
-    private float speed;
-    [SerializeField]
     private BoxCollider2D boxCollider;
     [SerializeField]
     private Animator animator;

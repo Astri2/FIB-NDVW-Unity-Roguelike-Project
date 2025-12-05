@@ -17,10 +17,22 @@ public class Parry : DefensiveWeapon
         
     }
 
+    void FixedUpdate()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.fixedDeltaTime * speed;
+        }
+    }
+
     public override void Attack()
     {
-        base.Attack();
-        StartCoroutine(AttackTimer());
+        if (timer <= 0)
+        {
+            timer += base.cooldown;
+            base.Attack();
+            StartCoroutine(AttackTimer());
+        }
     }
 
     public IEnumerator AttackTimer()

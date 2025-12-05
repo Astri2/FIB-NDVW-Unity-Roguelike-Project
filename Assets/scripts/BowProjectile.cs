@@ -34,4 +34,14 @@ public class BowProjectile : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public void SetDamage(float val)
+    {
+        damage = val;
+    }
 }

@@ -17,7 +17,7 @@ public class DefensiveWeapon : Weapon
     {
         if (timer > 0)
         {
-            timer -= Time.fixedDeltaTime;
+            timer -= Time.fixedDeltaTime * speed;
         }
     }
 

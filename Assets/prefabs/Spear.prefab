@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6e5633e20b72746845f5b1853951e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spear
-  damage: 9
-  speed: 1.5
   cooldown: 2
   timer: 0
+  damage: 9
+  speed: 1
   boxCollider: {fileID: 2928038962270163674}
   animator: {fileID: 4414454137924299683}
   isAttacking: 0
