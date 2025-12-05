@@ -8,21 +8,10 @@ using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HeadlessGraph", menuName = "NDVW/Headless graph")]
-class HeadlessGraph: LevelGraph
-{
-    private static Type FindType(string fullName)
+public class HeadlessGraph: LevelGraph
+{    public T CreateRoom<T>() where T : ARoom
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
-         .Where(a => !a.IsDynamic)
-         .SelectMany(a => a.GetTypes())
-         .FirstOrDefault(t => t.FullName.Equals(fullName));
-    }
-
-    public RoomBase CreateRoom()
-    {
-        var type = FindType(this.RoomType);
-        var roomType = type != null ? this.RoomType : typeof(Room).FullName;
-        var room = (RoomBase)CreateInstance(roomType);
+        T room = (T)CreateInstance(typeof(T).FullName);
 
         // Add room to the level graph
         this.Rooms.Add(room);
@@ -31,12 +20,9 @@ class HeadlessGraph: LevelGraph
         return room;
     }
 
-    public ConnectionBase CreateConnection(RoomBase from, RoomBase to)
+    public T CreateConnection<T>(RoomBase from, RoomBase to) where T : ACorridor
     {
-        /// most important lines:
-        var type = FindType(this.RoomType);
-        var connectionType = type != null ? this.ConnectionType : typeof(Connection).FullName;
-        var connection = (ConnectionBase)CreateInstance(connectionType);
+        T connection = (T)CreateInstance(typeof(T).FullName);
 
         // here we could most likely directly use Room instead of RoomControl
         connection.From = from;
@@ -47,4 +33,8 @@ class HeadlessGraph: LevelGraph
 
         return connection;
     }
+
+    public new string RoomType = typeof(Room).FullName;
+
+    public new string ConnectionType = typeof(Connection).FullName;
 }

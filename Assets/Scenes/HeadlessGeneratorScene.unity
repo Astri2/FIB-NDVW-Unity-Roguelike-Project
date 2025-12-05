@@ -403,7 +403,7 @@ MonoBehaviour:
     UseCorridors: 1
   GeneratorConfig:
     RootGameObject: {fileID: 0}
-    Timeout: 10000
+    Timeout: 5000
     RepeatModeOverride: 0
     MinimumRoomDistance: 1
     RoomTemplatePrefabMode: 0
@@ -430,9 +430,13 @@ MonoBehaviour:
   GenerateOn: 2
   ThrowExceptionsImmediately: 0
   DisableCustomPostProcessing: 0
-  DefaultRoomsSet: {fileID: 11400000, guid: cbe253205c1d35b45be9d858f905b196, type: 2}
-  BossRoom: {fileID: 8262108126446541429, guid: 78d68a54f6f4284469117100546a0d8d, type: 3}
-  CorridorRoomTemplateSets: {fileID: 11400000, guid: 4d910e17cb082b24fb147d5539197ecf, type: 2}
+  minPathLength: 10
+  maxPathLength: 15
+  numberOfFeatures: 4
+  LoopWeight: 1
+  BranchWeight: 4
+  DeadEndWeight: 1
+  disableRight: 0
 --- !u!4 &1080008141
 Transform:
   m_ObjectHideFlags: 0

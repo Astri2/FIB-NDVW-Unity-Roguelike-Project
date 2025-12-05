@@ -10,10 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc0feb0fe3ca387448cff6947dd58ed6, type: 3}
-  m_Name: Corridors
+  m_Name: Boss rooms
   m_EditorClassIdentifier: 
   RoomTemplates:
-  - {fileID: 8411853151689980096, guid: cbd1600ba55e5ed4ab855e4d4b604f6a, type: 3}
-  - {fileID: 8106449215217301676, guid: cc4e260ce53ecec4fac667480d213c4e, type: 3}
-  - {fileID: 7228749262884133912, guid: c0e4b4afd819c384593fcce5bc45310e, type: 3}
-  - {fileID: 4871752877431281383, guid: 40144d6cea6880f489efc2b259400a0b, type: 3}
+  - {fileID: 8262108126446541429, guid: 78d68a54f6f4284469117100546a0d8d, type: 3}

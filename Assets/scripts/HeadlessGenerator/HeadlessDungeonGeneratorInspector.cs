@@ -24,10 +24,16 @@ public class DungeonGeneratorInspector : UnityEditor.Editor
 
         EditorGUIUtility.labelWidth = EditorGUIUtility.currentViewWidth / 2f;
 
-        EditorGUILayout.LabelField("Headless config", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.DefaultRoomsSet)));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.BossRoom)));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.CorridorRoomTemplateSets)));
+        EditorGUILayout.LabelField("Graph config", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.minPathLength)));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.maxPathLength)));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.numberOfFeatures)));
+        EditorGUILayout.LabelField("FeatureWeights (sum > 0)");
+        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.LoopWeight)));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.BranchWeight)));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.DeadEndWeight)));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(HeadlessDungeonGeneratorGrid2D.disableRight)));
+
 
         // TODO: edit this to remove public access to LevelGraph
         EditorGUILayout.LabelField("Input config", EditorStyles.boldLabel);
