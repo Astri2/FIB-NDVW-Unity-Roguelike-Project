@@ -89,10 +89,7 @@ public static class HeadlessGraphGenerator
         for (int i = 0; i < branchSize; i++)
         {
             BasicRoom room = graph.CreateRoom<BasicRoom>();
-
-            // TODO: make this cleaner or remove. this is debug 
-            if (i == 0) graph.CreateConnection<FancyCorridor>(current, room);
-            else graph.CreateConnection<BasicCorridor>(current, room);
+            graph.CreateConnection<BasicCorridor>(current, room);
             current = room;
         }
 
@@ -119,10 +116,7 @@ public static class HeadlessGraphGenerator
         for (int i = 0; i < branchSize; i++)
         {
             BasicRoom room = graph.CreateRoom<BasicRoom>();
-
-            // TODO: make this cleaner or remove. this is debug 
-            if(i == 0) graph.CreateConnection<FancyCorridor>(current, room);
-            else graph.CreateConnection<BasicCorridor>(current, room);
+            graph.CreateConnection<BasicCorridor>(current, room);
             current = room;
         }
 
@@ -154,7 +148,7 @@ public static class HeadlessGraphGenerator
             else continue;
 
             // This is a valid node to reattach the node
-            graph.CreateConnection<FancyCorridor>(current, mainPath[closeNumber]);
+            graph.CreateConnection<BasicCorridor>(current, mainPath[closeNumber]);
 
             // mark the side as used for the whole branch
             for(int i = minID; i < maxID; i++)
@@ -187,7 +181,7 @@ public static class HeadlessGraphGenerator
 
         // store the first room of the branch for future looping
         BasicRoom firstRoom = graph.CreateRoom<BasicRoom>();
-        graph.CreateConnection<FancyCorridor>(origin, firstRoom);
+        graph.CreateConnection<BasicCorridor>(origin, firstRoom);
 
         ARoom previous = firstRoom;
         for (int i = 0; i < loopSize-1; i++)

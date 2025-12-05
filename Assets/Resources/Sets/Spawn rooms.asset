@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Spawn rooms
   m_EditorClassIdentifier: 
   RoomTemplates:
-  - {fileID: 9204587858199253963, guid: 1d63e946704ae944083a7b90a664d729, type: 3}
+  - {fileID: 9204587858199253963, guid: e4363390894f8db41aae707782bc9582, type: 3}

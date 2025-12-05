@@ -377,6 +377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1080008141}
   - component: {fileID: 1080008140}
+  - component: {fileID: 1080008142}
   m_Layer: 0
   m_Name: MyGenerator
   m_TagString: Untagged
@@ -446,12 +447,28 @@ Transform:
   m_GameObject: {fileID: 1080008139}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.3187246, y: -7.2623377, z: -0.08735205}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1080008142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080008139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a84344fc17d12148866b7ac03b036fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnEnemies
+  enemies:
+  - {fileID: -7920275183799078765, guid: f8a85e5a15dd18e4b84882666c76f149, type: 3}
+  - {fileID: -7920275183799078765, guid: 46483537ef65f7043a97c7b8356c5f42, type: 3}
+  - {fileID: -3540149406593638917, guid: 3a5e4e35f54f6e348a17f9342b8bd7f7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
