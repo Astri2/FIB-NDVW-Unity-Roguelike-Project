@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7122864289079306920}
   - component: {fileID: 7875121292276536588}
   - component: {fileID: -6705096782060842936}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BowProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

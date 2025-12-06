@@ -306,6 +306,21 @@ MonoBehaviour:
   Enemies:
   - {fileID: 1402291788}
   index: 0
+  healthBar: {fileID: 0}
+  width: 0
+  height: 0
+  BarMelee: {fileID: 0}
+  CooldownBarMelee: {fileID: 0}
+  widthMelee: 0
+  heightMelee: 0
+  BarRanged: {fileID: 0}
+  CooldownBarRanged: {fileID: 0}
+  widthRanged: 0
+  heightRanged: 0
+  BarSpace: {fileID: 0}
+  CooldownBarSpace: {fileID: 0}
+  widthSpace: 0
+  heightSpace: 0
 --- !u!4 &341171527
 Transform:
   m_ObjectHideFlags: 0
@@ -1113,10 +1128,10 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1872,5 +1887,5 @@ SceneRoots:
   - {fileID: 1261043237}
   - {fileID: 1304764083}
   - {fileID: 1634853172}
-  - {fileID: 1402291789}
   - {fileID: 341171527}
+  - {fileID: 1402291789}

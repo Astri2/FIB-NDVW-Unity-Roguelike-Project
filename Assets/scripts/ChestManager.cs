@@ -7,6 +7,26 @@ public class ChestManager : MonoBehaviour
     public List<Chest> ChestList;
     public List<AI_ChasingEnemy> Enemies;
     public int index = 0;
+
+    //healthbar
+    public RectTransform healthBar;
+    public float width, height;
+
+    //melee stamina bar
+    public RectTransform BarMelee;
+    public RectTransform CooldownBarMelee;
+    public float widthMelee, heightMelee;
+
+    //ranged stamina bar
+    public RectTransform BarRanged;
+    public RectTransform CooldownBarRanged;
+    public float widthRanged, heightRanged;
+
+    //space stamina bar
+    public RectTransform BarSpace;
+    public RectTransform CooldownBarSpace;
+    public float widthSpace, heightSpace;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,8 +56,8 @@ public class ChestManager : MonoBehaviour
         for(;;)
         {
             foreach (AI_ChasingEnemy enemy in Enemies) {
-                enemy.SetScaling(enemy.GetHP() * 1.2f);
-                enemy.SetScaling(enemy.GetScaling()*1.2f);
+                enemy.SetHP(enemy.GetHP() * 1.2f);
+                enemy.GetWeapon().Scale();
             }
             yield return new WaitForSeconds(30);
         }

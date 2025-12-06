@@ -37,6 +37,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private bool isParrying = false;
 
+    [SerializeField]
+    private ChestManager gameManager;
+
     //healthbar
     [SerializeField]
     private RectTransform healthBar;
@@ -72,6 +75,18 @@ public class PlayerManager : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         maxHp = 20;
         hp = maxHp;
+
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<ChestManager>();
+
+        healthBar = gameManager.healthBar;
+        BarMelee = gameManager.BarMelee;
+        CooldownBarMelee = gameManager.CooldownBarMelee;
+        BarRanged = gameManager.BarRanged;
+        CooldownBarRanged = gameManager.CooldownBarRanged;
+        BarSpace = gameManager.BarSpace;
+        CooldownBarSpace = gameManager.CooldownBarSpace;
+
+        Camera.main.transform.SetParent(transform, false);
     }
 
     /// <summary>

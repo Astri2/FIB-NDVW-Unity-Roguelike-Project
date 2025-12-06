@@ -22,7 +22,7 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
 
     private void HandleEnemies(DungeonGeneratorLevelGrid2D level)
     {
-        
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
         lvl = level;
         // every child of the rootGameObject is moved to center the dungeon.
         dungeonCenteringShift = level.RootGameObject.transform.GetChild(0).transform.position;
@@ -89,7 +89,9 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
 
                     Vector3 actualSpawnPos = new Vector3(position.x + 0.5f, position.y + 0.5f, 0) + dungeonCenteringShift;
                     GameObject debugEnemy = Instantiate(enemy, actualSpawnPos, Quaternion.identity, enemiesGO.transform);
-                    debugEnemy.GetComponent<Enemies>().roomPoints = pts;
+                    var temp = debugEnemy.GetComponent<Enemies>();
+                    temp.player = player.transform;
+                    temp.roomPoints = pts;
                     debugEnemies.Add(debugEnemy);
                     break;
                 }

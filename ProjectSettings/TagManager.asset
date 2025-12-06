@@ -6,6 +6,14 @@ TagManager:
   tags:
   - Health
   - Enemy
+  - HealthBar
+  - HealthBarAmount
+  - AttackBar
+  - AttackBarAmount
+  - RangedBar
+  - RangedBarAmount
+  - SpaceBar
+  - SpaceBarAmount
   layers:
   - Default
   - TransparentFX
