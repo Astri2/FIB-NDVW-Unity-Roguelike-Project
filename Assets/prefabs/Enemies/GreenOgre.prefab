@@ -207,11 +207,12 @@ MonoBehaviour:
   cost: 6
   roomPoints: []
   player: {fileID: 0}
-  speed: 3
+  speed: 1
   weapon: {fileID: 24147195679451998}
   hp: 20
   scaling: 0
   rb: {fileID: 2179296400991150106}
+  chests: []
 --- !u!61 &8036390091013806833
 BoxCollider2D:
   m_ObjectHideFlags: 0

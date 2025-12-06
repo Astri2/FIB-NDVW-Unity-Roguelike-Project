@@ -12,7 +12,7 @@ public class MeleeWeapon : Weapon
     public bool isAttacking;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Start()
     {
         isAttacking = false;
     }
@@ -40,12 +40,13 @@ public class MeleeWeapon : Weapon
     {
         Debug.Log("weapon hit");
         PlayerManager w = collider.gameObject.GetComponent<PlayerManager>();
-        AI_ChasingEnemy enemy = collider.gameObject.GetComponent<AI_ChasingEnemy>();
+        Enemies enemy = collider.gameObject.GetComponent<Enemies>();
         if (w != null && isAttacking && !(w.IsParrying()))
         {
             w.SetHP(w.GetHP() - this.damage);
         }
-        else if (enemy != null && isAttacking) { 
+        else if (enemy != null && isAttacking) {
+            Debug.Log("enemy took a hit");
             enemy.SetHP(enemy.GetHP() - this.damage);
         }
     }

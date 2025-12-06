@@ -16,12 +16,6 @@ public class SpaceBarUpgrade : Upgrade
         Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override bool IsInteractionAllowed()
     {
         return !AlreadyCollected;

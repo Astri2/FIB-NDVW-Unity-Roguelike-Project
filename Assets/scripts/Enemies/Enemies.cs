@@ -27,14 +27,17 @@ public class Enemies : MonoBehaviour
 
     public Rigidbody2D rb;
 
+    [SerializeField]
+    private List<Chest> chests = new();
+
     public void Start()
     {
-        hp = 20;
         scaling = 1.0f;
     }
 
-    void Update()
+    public void Update()
     {
+        rb.linearVelocity = new Vector3(0, 0, 0);
         // Only try to move if the 'canChase' switch is ON
         // and we have a valid player reference
         if (canChase && player != null)
@@ -79,10 +82,7 @@ public class Enemies : MonoBehaviour
             // ------------------------------------------
         }
 
-        if (hp <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        if (hp <= 0) { this.death(); }
     }
 
     /// <summary>
@@ -134,5 +134,20 @@ public class Enemies : MonoBehaviour
     {
         scaling = val;
         weapon.Scale();
+    }
+
+    public void AddChest(Chest chest)
+    {
+        this.chests.Add(chest);
+    }
+
+    public void death()
+    {
+        // allert the linked chests that the enemy is dead
+        foreach(Chest chest in chests)
+        {
+            chest.RemoveEnemy(this);
+        }
+        Destroy(this.gameObject);
     }
 }

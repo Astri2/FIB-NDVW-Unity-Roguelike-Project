@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChestManager : MonoBehaviour
 {
     public List<Chest> ChestList;
-    public List<AI_ChasingEnemy> Enemies;
+    public List<Enemies> Enemies;
     public int index = 0;
 
     //healthbar
@@ -53,13 +53,16 @@ public class ChestManager : MonoBehaviour
 
     public IEnumerator EnemyScaling()
     {
+        yield return null;
+        /*
         for(;;)
         {
-            foreach (AI_ChasingEnemy enemy in Enemies) {
+            foreach (Enemies enemy in Enemies) {
                 enemy.SetHP(enemy.GetHP() * 1.2f);
                 enemy.GetWeapon().Scale();
             }
             yield return new WaitForSeconds(30);
         }
+        */
     }
 }

@@ -23,6 +23,18 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
     private void HandleEnemies(DungeonGeneratorLevelGrid2D level)
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Could not retrieve player");
+            return;
+        }
+        ChestManager chestManager = GameObject.FindGameObjectWithTag("GameController")?.GetComponent<ChestManager>();
+        if (chestManager == null)
+        {
+            Debug.LogError("Could not retrieve chest manager");
+            return;
+        }
+
         lvl = level;
         // every child of the rootGameObject is moved to center the dungeon.
         dungeonCenteringShift = level.RootGameObject.transform.GetChild(0).transform.position;
@@ -42,6 +54,10 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
         foreach (RoomInstanceGrid2D roomInstance in level.RoomInstances)
         {
             if (roomInstance.IsCorridor) continue;
+
+            // retrieve all chests of the room & register them all
+            Chest[] chests = roomInstance.RoomTemplateInstance.GetComponentsInChildren<Chest>();
+            foreach(Chest chest in chests) chestManager.ChestList.Add(chest);
 
             // retrieve all spawnable points of the room
             List<Vector2Int> outlinePts = roomInstance.OutlinePolygon.GetOutlinePoints();
@@ -89,9 +105,17 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
 
                     Vector3 actualSpawnPos = new Vector3(position.x + 0.5f, position.y + 0.5f, 0) + dungeonCenteringShift;
                     GameObject debugEnemy = Instantiate(enemy, actualSpawnPos, Quaternion.identity, enemiesGO.transform);
-                    var temp = debugEnemy.GetComponent<Enemies>();
-                    temp.player = player.transform;
-                    temp.roomPoints = pts;
+                    
+                    var enemyInstance = debugEnemy.GetComponent<Enemies>();
+                    enemyInstance.player = player.transform;
+                    enemyInstance.roomPoints = pts;
+
+                    chestManager.Enemies.Add(enemyInstance);
+                    foreach(Chest chest in chests) { 
+                        chest.AddEnemy(enemyInstance);
+                        enemyInstance.AddChest(chest);
+                    }
+
                     debugEnemies.Add(debugEnemy);
                     break;
                 }
@@ -150,7 +174,5 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
             //Gizmos.DrawWireSphere(enemy.transform.position, radius);
             Gizmos.DrawWireCube(enemy.transform.position + offset, sizeCol);
         }
-        
-            
     }
 }

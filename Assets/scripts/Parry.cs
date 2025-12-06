@@ -11,20 +11,6 @@ public class Parry : DefensiveWeapon
         playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void FixedUpdate()
-    {
-        if (timer > 0)
-        {
-            timer -= Time.fixedDeltaTime * speed;
-        }
-    }
-
     public override void Attack()
     {
         if (timer <= 0)

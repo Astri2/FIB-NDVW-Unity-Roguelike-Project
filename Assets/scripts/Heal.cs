@@ -5,18 +5,11 @@ public class Heal : DefensiveWeapon
 {
     [SerializeField]
     private PlayerManager playerManager;
-    void Start()
+    public void Start()
     {
         playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
     }
 
-    void FixedUpdate()
-    {
-        if (timer > 0)
-        {
-            timer -= Time.fixedDeltaTime*speed;
-        }
-    }
     public override void Attack()
     {
         if (timer <= 0)

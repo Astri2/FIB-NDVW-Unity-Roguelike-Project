@@ -8,20 +8,20 @@ public class BowProjectile : MonoBehaviour
     public float distance;
     public LayerMask layerMask;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Start()
     {
         Invoke("DestroyProjectile", lifetime);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, distance, layerMask);
         if(hit.collider != null)
         {
             if (hit.collider.GetType() == typeof(CapsuleCollider2D) && hit.collider.CompareTag("Enemy"))
             {
-                AI_ChasingEnemy en = hit.collider.GetComponent<AI_ChasingEnemy>();
+                Enemies en = hit.collider.GetComponent<Enemies>();
                 en.SetHP(en.GetHP() - this.damage);
                 DestroyProjectile();
             }

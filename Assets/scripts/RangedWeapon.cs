@@ -9,16 +9,6 @@ public class RangedWeapon : Weapon
     [SerializeField]
     private BowProjectile projScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void FixedUpdate()
     {
@@ -38,7 +28,7 @@ public class RangedWeapon : Weapon
         }
     }
 
-    public void Scale()
+    public new void Scale()
     {
         projScript.SetDamage(projScript.GetDamage() * 1.15f);
         speed = 1.15f * speed;
