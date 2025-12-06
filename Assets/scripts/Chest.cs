@@ -1,14 +1,19 @@
-﻿using Codice.Client.Common;
-using UnityEngine;
+﻿using UnityEngine;
 using Edgar.Unity.Examples;
+using System.Collections.Generic;
+using System.Linq;
 
 
 /// <summary>
 /// Example implementation of a chest that is opened (sprite change) when the players interacts with it.
 /// </summary>
-public class Example2Chest : InteractableBase
+public class Chest : InteractableBase
 {
     public bool AlreadyOpened;
+
+    //switch to list in order to randomize the type of upgrade given
+    public List<Upgrade> upgrades;
+    private int index;
 
     /// <summary>
     /// Make sure to not make it possible to interact with the chest when it is already opened.
@@ -32,6 +37,8 @@ public class Example2Chest : InteractableBase
             gameObject.transform.Find("Open").gameObject.SetActive(true);
 
             //instanciate new upgrade
+            Upgrade up = GameObject.Instantiate(upgrades[index]);
+            up.transform.position = this.transform.position + new Vector3(0,-0.6f,0);
             AlreadyOpened = true;
         }
     }
@@ -39,5 +46,10 @@ public class Example2Chest : InteractableBase
     public override void EndInteract()
     {
         HideText();
+    }
+
+    public void SetIndex(int val)
+    {
+        index = val;
     }
 }

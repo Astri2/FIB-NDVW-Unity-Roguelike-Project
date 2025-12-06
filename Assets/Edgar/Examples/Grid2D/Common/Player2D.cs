@@ -8,6 +8,7 @@ namespace Edgar.Unity.Examples
     public class Player2D : MonoBehaviour
     {
         private IInteractable interactableInFocus;
+        [SerializeField]
 
         /// <summary>
         /// If an interactable object is in focus and is allowed to interact, call its Interact() method.
@@ -25,6 +26,7 @@ namespace Edgar.Unity.Examples
                     interactableInFocus.EndInteract();
                     interactableInFocus = null;
                 }
+
             }
         }
 

@@ -39,7 +39,9 @@
 ./idea
 
 # Visual Studio code cache directory
-./vscode
+.vscode/
+.csproj
+*.slnx
 
 # Gradle cache directory
 .gradle/
