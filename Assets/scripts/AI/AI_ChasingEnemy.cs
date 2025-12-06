@@ -126,5 +126,6 @@ public class AI_ChasingEnemy : MonoBehaviour
     public void SetScaling(float val)
     {
         scaling = val;
+        weapon.Scale();
     }
 }

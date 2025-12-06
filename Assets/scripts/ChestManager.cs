@@ -39,7 +39,7 @@ public class ChestManager : MonoBehaviour
                 enemy.SetScaling(enemy.GetHP() * 1.2f);
                 enemy.SetScaling(enemy.GetScaling()*1.2f);
             }
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(30);
         }
     }
 }

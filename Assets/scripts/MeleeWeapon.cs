@@ -43,7 +43,7 @@ public class MeleeWeapon : Weapon
         AI_ChasingEnemy enemy = collider.gameObject.GetComponent<AI_ChasingEnemy>();
         if (w != null && isAttacking && !(w.IsParrying()))
         {
-            w.SetHP(w.GetHP() - enemy.GetScaling()*this.damage);
+            w.SetHP(w.GetHP() - this.damage);
         }
         else if (enemy != null && isAttacking) { 
             enemy.SetHP(enemy.GetHP() - this.damage);
