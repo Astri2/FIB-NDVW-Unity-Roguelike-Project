@@ -11,7 +11,7 @@ namespace Edgar.Unity.Examples
     {
         protected Text InteractionText;
 
-        public void Start()
+        public virtual void Start()
         {
             InteractionText = GameObject.Find("Canvas")?.transform.Find("Interaction")?.GetComponent<Text>();
         }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0feb0fe3ca387448cff6947dd58ed6, type: 3}
+  m_Name: SetCorridor
+  m_EditorClassIdentifier: 
+  RoomTemplates:
+  - {fileID: 7248104855113955514, guid: 9fba7e5c24b118c4e868a4af3b2c3172, type: 3}
+  - {fileID: 7737378361162932374, guid: 23ae5050d7ce5b043b332d5b0b7015db, type: 3}
+  - {fileID: 8411853151689980096, guid: c2e4eed712a5dc7458d7556623f9d382, type: 3}
+  - {fileID: 8106449215217301676, guid: ae2f7709944456b4cb8147ea557e0923, type: 3}
+  - {fileID: 7228749262884133912, guid: dc9756dc886e9bb45a2d33b35c0fa599, type: 3}
+  - {fileID: 4871752877431281383, guid: 75a43d78b08841d41bce555ef1bdfc37, type: 3}

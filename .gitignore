@@ -40,6 +40,8 @@
 
 # Visual Studio code cache directory
 .vscode/
+.csproj
+*.slnx
 
 # Gradle cache directory
 .gradle/
@@ -104,3 +106,7 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Temp resources
+dungeon.dot
+dungeon.png

@@ -3,17 +3,27 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Health
+  - Enemy
+  - HealthBar
+  - HealthBarAmount
+  - AttackBar
+  - AttackBarAmount
+  - RangedBar
+  - RangedBarAmount
+  - SpaceBar
+  - SpaceBarAmount
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Walls
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Enemy
+  - Projectiles
+  - Walls
   - 
   - 
   - 
