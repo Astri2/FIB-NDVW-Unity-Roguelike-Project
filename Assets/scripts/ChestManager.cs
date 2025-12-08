@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChestManager : MonoBehaviour
 {
     public List<Chest> ChestList;
-    public List<Enemies> Enemies;
+    public List<Enemy> Enemies;
     public int index = 0;
 
     //healthbar

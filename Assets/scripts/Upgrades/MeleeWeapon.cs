@@ -40,7 +40,7 @@ public class MeleeWeapon : Weapon
     {
         Debug.Log("weapon hit");
         PlayerManager w = collider.gameObject.GetComponent<PlayerManager>();
-        Enemies enemy = collider.gameObject.GetComponent<Enemies>();
+        Enemy enemy = collider.gameObject.GetComponent<Enemy>();
         if (w != null && isAttacking && !(w.IsParrying()))
         {
             w.SetHP(w.GetHP() - this.damage);

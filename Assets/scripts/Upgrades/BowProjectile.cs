@@ -21,7 +21,7 @@ public class BowProjectile : MonoBehaviour
         {
             if (hit.collider.GetType() == typeof(CapsuleCollider2D) && hit.collider.CompareTag("Enemy"))
             {
-                Enemies en = hit.collider.GetComponent<Enemies>();
+                Enemy en = hit.collider.GetComponent<Enemy>();
                 en.SetHP(en.GetHP() - this.damage);
                 DestroyProjectile();
             }

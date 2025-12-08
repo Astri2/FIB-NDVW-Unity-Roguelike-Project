@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
 {
     // List of enemies prefabs
-    public List<Enemies> enemies;
+    public List<Enemy> enemies;
 
     // used for gizmos
     private List<GameObject> debugEnemies = new List<GameObject>();
@@ -77,14 +77,14 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
             int nbCandidates;
             while (true)
             {
-                List<Enemies> enemyCandidates = (from e in enemies where e.cost <= budgetRoom select e).ToList();
+                List<Enemy> enemyCandidates = (from e in enemies where e.GetCost() <= budgetRoom select e).ToList();
                 nbCandidates = enemyCandidates.Count;
                 
                 if (nbCandidates == 0) break;
 
-                Enemies enemy = enemyCandidates[Random.Next(0, nbCandidates)];
+                Enemy enemy = enemyCandidates[Random.Next(0, nbCandidates)];
                 choosenEnemies.Add(enemy.gameObject);
-                budgetRoom -= enemy.cost;
+                budgetRoom -= enemy.GetCost();
             }
 
             // decide on spawn points
@@ -106,9 +106,9 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
                     Vector3 actualSpawnPos = new Vector3(position.x + 0.5f, position.y + 0.5f, 0) + dungeonCenteringShift;
                     GameObject debugEnemy = Instantiate(enemy, actualSpawnPos, Quaternion.identity, enemiesGO.transform);
                     
-                    var enemyInstance = debugEnemy.GetComponent<Enemies>();
-                    enemyInstance.player = player.transform;
-                    enemyInstance.roomPoints = pts;
+                    var enemyInstance = debugEnemy.GetComponent<Enemy>();
+                    enemyInstance.SetPlayerTransform(player.transform);
+                    enemyInstance.SetRoomPoints(pts);
 
                     chestManager.Enemies.Add(enemyInstance);
                     foreach(Chest chest in chests) { 

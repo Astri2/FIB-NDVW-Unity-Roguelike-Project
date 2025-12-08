@@ -1186,7 +1186,7 @@ GameObject:
   - component: {fileID: 530703449189901749}
   - component: {fileID: 8996076901823203966}
   - component: {fileID: 399204120718424897}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1507,7 +1507,7 @@ CompositeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -1547,22 +1547,22 @@ CompositeCollider2D:
         Y: -10000000
   m_CompositePaths:
     m_Paths:
-    - - {x: -2, y: 2}
-      - {x: -3, y: 2}
-      - {x: -3, y: 1}
-      - {x: -2, y: 1}
-    - - {x: 0, y: 2}
-      - {x: -1, y: 2}
-      - {x: -1, y: 1}
-      - {x: 0, y: 1}
-    - - {x: -2, y: 0}
-      - {x: -3, y: 0}
-      - {x: -3, y: -1}
-      - {x: -2, y: -1}
-    - - {x: 0, y: 0}
-      - {x: -1, y: 0}
-      - {x: -1, y: -1}
-      - {x: 0, y: -1}
+    - - {x: -0.000029300001, y: 1}
+      - {x: -0.000029300001, y: 2}
+      - {x: -1, y: 1.9999708}
+      - {x: -0.99997073, y: 1}
+    - - {x: -2.0000293, y: 1}
+      - {x: -2.0000293, y: 2}
+      - {x: -3, y: 1.9999708}
+      - {x: -2.999971, y: 1}
+    - - {x: -0.000029300001, y: -1}
+      - {x: -0.000029300001, y: 0}
+      - {x: -1, y: -0.000029300001}
+      - {x: -0.99997073, y: -1}
+    - - {x: -2.0000293, y: -1}
+      - {x: -2.0000293, y: 0}
+      - {x: -3, y: -0.000029300001}
+      - {x: -2.999971, y: -1}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0

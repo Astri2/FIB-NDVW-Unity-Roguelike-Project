@@ -16,7 +16,7 @@ public class Chest : InteractableBase
     private int index;
 
     [SerializeField]
-    private List<Enemies> enemies = new();
+    private List<Enemy> enemies = new();
 
     /// <summary>
     /// Make sure to not make it possible to interact with the chest when it is already opened.
@@ -56,13 +56,13 @@ public class Chest : InteractableBase
         index = val;
     }
 
-    public void AddEnemy(Enemies enemy)
+    public void AddEnemy(Enemy enemy)
     {
         enemies.Add(enemy);
         this.gameObject.SetActive(false); // disabled until every enemy is dead
     }
 
-    public void RemoveEnemy(Enemies enemy)
+    public void RemoveEnemy(Enemy enemy)
     {
         enemies.Remove(enemy);
         this.gameObject.SetActive(enemies.Count == 0);

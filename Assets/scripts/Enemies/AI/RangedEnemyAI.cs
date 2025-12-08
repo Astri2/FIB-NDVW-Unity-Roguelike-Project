@@ -1,8 +1,13 @@
 using UnityEngine;
 using Pathfinding;
 
+[RequireComponent(typeof(Enemy))]
+[RequireComponent(typeof(AIPath))]
+[RequireComponent(typeof(AIDestinationSetter))]
 public class RangedEnemyAI : MonoBehaviour
 {
+    Enemy enemy;
+
     [Header("Attack Settings")]
     public GameObject projectilePrefab;
     public float attackRange = 5f;
@@ -23,35 +28,35 @@ public class RangedEnemyAI : MonoBehaviour
     public int maxWanderSteps = 100;
     private int currentWanderStep = 0;
 
-    private float fireCooldown;
+    // private float fireCooldown;
     private AIPath aiPath;
     private AIDestinationSetter destSetter;
 
-    private Transform player;
     private bool isWandering = false;
     private bool finishedWandering = false;
 
     private Transform targetHelper; // Reusable transform for movement targets
 
-    void Start()
+    [Header("Kieran's weapon system")]
+    BowEnemy bow;
+
+    public void Start()
     {
         aiPath = GetComponent<AIPath>();
         destSetter = GetComponent<AIDestinationSetter>();
+        enemy = GetComponent<Enemy>();
 
         // Create a hidden helper object to act as the dynamic target
         GameObject wt = new GameObject("AI_Target_Helper");
         targetHelper = wt.transform;
-
-        GameObject foundPlayer = GameObject.FindGameObjectWithTag("Player");
-        if (foundPlayer != null) player = foundPlayer.transform;
     }
 
-    void Update()
+    public void Update()
     {
-        if (player == null) return;
+        if (enemy.GetPlayerTransform() == null) return;
 
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        fireCooldown -= Time.deltaTime;
+        float distanceToPlayer = Vector2.Distance(transform.position, enemy.GetPlayerTransform().position);
+        // fireCooldown -= Time.deltaTime;
 
         // =========================================================
         // STATE 1: COMBAT (Player is visible/near)
@@ -59,6 +64,10 @@ public class RangedEnemyAI : MonoBehaviour
         if (distanceToPlayer <= wanderStartDistance)
         {
             isWandering = false;
+            
+            // enemy start aiming at the player as soon as he sees it
+            bow.RotateTowards(enemy.GetPlayerTransform().position);
+            
             HandleCombatMovement(distanceToPlayer);
             AttackWhenInRange(distanceToPlayer);
         }
@@ -82,13 +91,13 @@ public class RangedEnemyAI : MonoBehaviour
         // If we are further than (3.0 + 0.5), move closer
         if (distanceToPlayer > preferredDistance + distanceBuffer)
         {
-            destSetter.target = player;
+            destSetter.target = enemy.GetPlayerTransform();
         }
         // 2. TOO CLOSE: Back Away (Flee)
         // If we are closer than (3.0 - 0.5), move backwards
         else if (distanceToPlayer < preferredDistance - distanceBuffer)
         {
-            Vector3 directionAway = (transform.position - player.position).normalized;
+            Vector3 directionAway = (transform.position - enemy.GetPlayerTransform().position).normalized;
             Vector3 fleePosition = transform.position + directionAway * 2f; // Try to move 2 units away
 
             // Check if flee point is walkable using our safety check
@@ -147,6 +156,7 @@ public class RangedEnemyAI : MonoBehaviour
 
         for (int i = 0; i < wanderRetries; i++)
         {
+            // TODO: use the list of point given at the start in Enemy Component
             Vector2 randomOffset = Random.insideUnitCircle * wanderRadius;
             Vector3 randomPoint = transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
 
@@ -197,21 +207,24 @@ public class RangedEnemyAI : MonoBehaviour
     // ==============================================
     private void AttackWhenInRange(float distance)
     {
-        if (distance <= attackRange && fireCooldown <= 0f)
+        if (distance <= attackRange /* && fireCooldown <= 0f */)
         {
-            ShootAtPlayer();
-            fireCooldown = fireInterval;
+            // ShootAtPlayer();
+            // fireCooldown = fireInterval;
+            bow.Attack();
         }
     }
 
+    /*
     private void ShootAtPlayer()
     {
-        if (projectilePrefab == null || player == null) return;
+        if (projectilePrefab == null || enemy.GetPlayerTransform() == null) return;
         
-        Vector2 direction = (player.position - transform.position).normalized;
+        Vector2 direction = (enemy.GetPlayerTransform().position - transform.position).normalized;
         GameObject bullet = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         
         if (bullet.TryGetComponent(out EnemyProjectile proj)) 
             proj.SetDirection(direction);
     }
+    */
 }
