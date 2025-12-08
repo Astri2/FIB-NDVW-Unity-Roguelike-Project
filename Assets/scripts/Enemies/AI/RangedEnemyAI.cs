@@ -38,7 +38,7 @@ public class RangedEnemyAI : MonoBehaviour
     private Transform targetHelper; // Reusable transform for movement targets
 
     [Header("Kieran's weapon system")]
-    BowEnemy bow;
+    public BowEnemy bow;
 
     public void Start()
     {
@@ -47,7 +47,12 @@ public class RangedEnemyAI : MonoBehaviour
         enemy = GetComponent<Enemy>();
 
         // Create a hidden helper object to act as the dynamic target
+        // Store it into a gameobject to avoid using hierachy root
+        GameObject helpers = GameObject.Find("AITargetHelpers");
+        if (helpers == null) helpers = new GameObject("AITargetHelpers");
+
         GameObject wt = new GameObject("AI_Target_Helper");
+        wt.transform.parent = helpers.transform;
         targetHelper = wt.transform;
     }
 
@@ -156,9 +161,15 @@ public class RangedEnemyAI : MonoBehaviour
 
         for (int i = 0; i < wanderRetries; i++)
         {
+            /*
             // TODO: use the list of point given at the start in Enemy Component
             Vector2 randomOffset = Random.insideUnitCircle * wanderRadius;
             Vector3 randomPoint = transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
+            */
+            int ptIndexRandom = Random.Range(0, enemy.GetRoomPoints().Count - 1);
+            Vector2 random2Dpt = enemy.GetRoomPoints()[ptIndexRandom];
+            Vector3 randomPoint = new Vector3(random2Dpt.x + 0.5f, random2Dpt.y + 0.5f, 0f) + enemy.GetDungeonCenteringShift();
+
 
             var info = AstarPath.active.GetNearest(randomPoint, NNConstraint.Default);
 

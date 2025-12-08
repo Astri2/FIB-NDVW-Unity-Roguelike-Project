@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private List<Vector2Int> roomPoints;
 
+    [SerializeField] private Vector3 dungeonCenteringShift;
+
     [SerializeField] private Transform player;
 
     public int GetCost() => cost;
@@ -29,6 +31,10 @@ public class Enemy : MonoBehaviour
     public void SetRoomPoints(List<Vector2Int> roomPoints) => this.roomPoints = roomPoints;
 
     public List<Vector2Int> GetRoomPoints() => roomPoints;
+
+    public void SetDungeonCenteringShift(Vector3 dungeonCenteringShift) => this.dungeonCenteringShift = dungeonCenteringShift;
+
+    public Vector3 GetDungeonCenteringShift() => dungeonCenteringShift;
 
     public void SetPlayerTransform(Transform player) => this.player = player;
 

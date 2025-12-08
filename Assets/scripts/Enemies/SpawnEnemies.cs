@@ -4,6 +4,7 @@ using Edgar.Unity;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.Tilemaps;
+using Unity.VisualScripting;
 
 public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
 {
@@ -109,6 +110,7 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
                     var enemyInstance = debugEnemy.GetComponent<Enemy>();
                     enemyInstance.SetPlayerTransform(player.transform);
                     enemyInstance.SetRoomPoints(pts);
+                    enemyInstance.SetDungeonCenteringShift(dungeonCenteringShift);
 
                     chestManager.Enemies.Add(enemyInstance);
                     foreach(Chest chest in chests) { 
