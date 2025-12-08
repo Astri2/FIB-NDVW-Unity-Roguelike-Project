@@ -966,7 +966,7 @@ CompositeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
@@ -990,16 +990,16 @@ CompositeCollider2D:
         Y: 29999813
   m_CompositePaths:
     m_Paths:
-    - - {x: 2.9999897, y: -3.000004}
-      - {x: 2.9999924, y: 4.00001}
-      - {x: -5.0000043, y: 4.0000014}
-      - {x: -4.9999537, y: -3}
-    - - {x: 1.9999784, y: -1.9999864}
-      - {x: -4, y: -1.9999536}
-      - {x: -3.999984, y: 2.9999893}
-      - {x: 1.999989, y: 2.9999785}
+    - - {x: 2.9999955, y: 4.00001}
+      - {x: -5.0000043, y: 4.000004}
+      - {x: -4.9999566, y: -3}
+      - {x: 2.9999926, y: -3.000004}
+    - - {x: -4, y: -1.9999564}
+      - {x: -3.9999874, y: 2.9999893}
+      - {x: 1.999989, y: 2.9999812}
+      - {x: 1.9999784, y: -1.9999894}
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.000005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 3863958851899841057}
 --- !u!1 &5619395024718328607
