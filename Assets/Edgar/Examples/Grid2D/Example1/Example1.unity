@@ -61183,6 +61183,7 @@ GameObject:
   - component: {fileID: 1629689261}
   - component: {fileID: 1629689260}
   - component: {fileID: 1629689262}
+  - component: {fileID: 1629689263}
   m_Layer: 0
   m_Name: Dungeon Generator
   m_TagString: Untagged
@@ -61306,10 +61307,10 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634187943}
+  m_GameObject: {fileID: 1629689259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5df7bc95180faff49aa1c40dfe21b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: 71df2668bd2b94f04b7b54f7767f3ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RoomInstance:
