@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Codice.Client.Common.EventTracking.TrackFeatureUseEvent.Features.DesktopGUI.Filters;
 
 public class EnemyHorizontalMovement : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class EnemyHorizontalMovement : MonoBehaviour
         // Move horizontally
         transform.Translate(Vector2.right * direction * speed * Time.deltaTime);
 
+        /*
         // Check distance from start
         if (Vector3.Distance(startPos, transform.position) >= moveDistance)
         {
@@ -30,5 +32,14 @@ public class EnemyHorizontalMovement : MonoBehaviour
             float clampedX = Mathf.Clamp(transform.position.x, startPos.x - moveDistance, startPos.x + moveDistance);
             transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
         }
+        */
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Hi!");
+        if (collision.gameObject.layer != LayerMask.NameToLayer("Walls")) return;
+        Debug.Log("Hi2!");
+        direction *= -1;
     }
 }

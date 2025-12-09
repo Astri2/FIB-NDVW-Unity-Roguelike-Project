@@ -28,14 +28,14 @@ public class AIChase_Simple_Trigger : MonoBehaviour
     private int patrolIndex = 0;
     private float roamingTimer;
 
-    void Start()
+    public void Start()
     {
         spawnPoint = transform.position;
         GeneratePatrolPoints();
         ChooseNewRoamingPoint();
     }
 
-    void Update()
+    public void Update()
     {
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -190,7 +190,7 @@ public class AIChase_Simple_Trigger : MonoBehaviour
     }
 
     
-    private void OnDrawGizmosSelected()
+    public void OnDrawGizmosSelected()
     {
         if (patrolPoints == null) return;
 
