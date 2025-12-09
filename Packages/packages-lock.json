@@ -215,7 +215,7 @@
     "com.unity.services.authentication": {
       "version": "3.5.2",
       "depth": 0,
-      "source": "builtin",
+      "source": "registry",
       "dependencies": {
         "com.unity.ugui": "1.0.0",
         "com.unity.services.core": "1.15.1",
