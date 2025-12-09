@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -18,11 +19,21 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Transform player;
 
+    private Slider HealthBar;
+
+    private void Start()
+    {
+        HealthBar = GetComponentInChildren<Slider>();
+        HealthBar.maxValue = hp;
+        HealthBar.value = hp;
+    }
+
     public int GetCost() => cost;
     public float GetHP() => hp;
     public void SetHP(float hp)
     {
         this.hp = hp;
+        HealthBar.value = hp;
         if (hp <= 0) death();
     }
 
