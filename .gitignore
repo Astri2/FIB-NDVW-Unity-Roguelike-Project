@@ -39,6 +39,8 @@
 ./idea
 
 # Visual Studio code cache directory
+./vscode
+FIB-NDVW-Unity-Roguelike-Project.slnx
 .vscode/
 .csproj
 *.slnx
