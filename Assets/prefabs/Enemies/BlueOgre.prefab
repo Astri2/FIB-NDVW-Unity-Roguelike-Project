@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1732079184595502178}
   m_Layer: 0
   m_Name: BlueOgre
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,14 +205,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 10
-  roomPoints: []
-  player: {fileID: 0}
-  speed: 1
-  weapon: {fileID: 395987878583597666}
   hp: 50
-  scaling: 0
-  rb: {fileID: 2179296400991150106}
   chests: []
+  roomPoints: []
+  dungeonCenteringShift: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
 --- !u!70 &5875874749273824696
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -357,17 +354,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
---- !u!114 &395987878583597666 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1888456842580889715, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-  m_PrefabInstance: {fileID: 2255161701716814353}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e6e5633e20b72746845f5b1853951e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Spear
 --- !u!4 &7125222360922099272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
