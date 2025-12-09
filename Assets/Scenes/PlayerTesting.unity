@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 341171526}
   m_Layer: 0
   m_Name: ChestManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,23 +304,23 @@ MonoBehaviour:
   - {fileID: 977893082}
   - {fileID: 1417112581}
   Enemies:
-  - {fileID: 1402291788}
+  - {fileID: 0}
   index: 0
-  healthBar: {fileID: 0}
-  width: 0
-  height: 0
-  BarMelee: {fileID: 0}
-  CooldownBarMelee: {fileID: 0}
-  widthMelee: 0
-  heightMelee: 0
-  BarRanged: {fileID: 0}
-  CooldownBarRanged: {fileID: 0}
-  widthRanged: 0
-  heightRanged: 0
-  BarSpace: {fileID: 0}
-  CooldownBarSpace: {fileID: 0}
-  widthSpace: 0
-  heightSpace: 0
+  healthBar: {fileID: 21463336}
+  width: 300
+  height: 20
+  BarMelee: {fileID: 1538015779}
+  CooldownBarMelee: {fileID: 332516125}
+  widthMelee: 300
+  heightMelee: 20
+  BarRanged: {fileID: 1451261469}
+  CooldownBarRanged: {fileID: 581477991}
+  widthRanged: 300
+  heightRanged: 20
+  BarSpace: {fileID: 1776555029}
+  CooldownBarSpace: {fileID: 1411303560}
+  widthSpace: 300
+  heightSpace: 20
 --- !u!4 &341171527
 Transform:
   m_ObjectHideFlags: 0
@@ -660,11 +660,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
---- !u!4 &947967069 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3986202553696381935, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
-  m_PrefabInstance: {fileID: 741392430}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &977893081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1012,11 +1007,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1402291789}
-  - component: {fileID: 1402291788}
   - component: {fileID: 1402291786}
   - component: {fileID: 1402291791}
   - component: {fileID: 1402291792}
   - component: {fileID: 1402291793}
+  - component: {fileID: 1402291795}
+  - component: {fileID: 1402291794}
   m_Layer: 6
   m_Name: AI_Enemy
   m_TagString: Enemy
@@ -1082,23 +1078,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1402291788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402291785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0c16b9d03e1d7448f4b2c873de7404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AI_ChasingEnemy
-  player: {fileID: 947967069}
-  speed: 3
-  weapon: {fileID: 1381195846}
-  hp: 0
-  scaling: 0
 --- !u!4 &1402291789
 Transform:
   m_ObjectHideFlags: 0
@@ -1244,6 +1223,54 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
+--- !u!50 &1402291794
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402291785}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1402291795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402291785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 216a64ce192ee8f488f96bf232b85e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies
+  cost: 2
+  roomPoints: []
+  player: {fileID: 0}
+  speed: 3
+  weapon: {fileID: 1381195846}
+  hp: 20
+  scaling: 0
+  rb: {fileID: 1402291794}
+  chests: []
 --- !u!1 &1411303559
 GameObject:
   m_ObjectHideFlags: 0
