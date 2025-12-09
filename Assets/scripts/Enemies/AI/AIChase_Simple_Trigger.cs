@@ -185,6 +185,7 @@ public class AIChase_Simple_Trigger : MonoBehaviour
     void ChooseNewRoamingPoint()
     {
         roamingTimer = roamingInterval;
+        // todo, change this
         Vector2 randomCircle = Random.insideUnitCircle * roamingRadius;
         roamingTarget = spawnPoint + new Vector3(randomCircle.x, randomCircle.y, 0f);
     }
