@@ -304,7 +304,7 @@ MonoBehaviour:
   - {fileID: 977893082}
   - {fileID: 1417112581}
   Enemies:
-  - {fileID: 1402291788}
+  - {fileID: 0}
   index: 0
   healthBar: {fileID: 0}
   width: 0
@@ -660,11 +660,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
---- !u!4 &947967069 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3986202553696381935, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
-  m_PrefabInstance: {fileID: 741392430}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &977893081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -921,83 +916,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1381195845
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1402291789}
-    m_Modifications:
-    - target: {fileID: 2928038962270163674, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4730414138602445529, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_Name
-      value: Spear
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
---- !u!114 &1381195846 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1888456842580889715, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-  m_PrefabInstance: {fileID: 1381195845}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e6e5633e20b72746845f5b1853951e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Spear
---- !u!4 &1381195847 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
-  m_PrefabInstance: {fileID: 1381195845}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1398307258 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7633995800546438398, guid: 2ba33a6a1ee59bc4981469b61cafb32c, type: 3}
@@ -1012,11 +930,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1402291789}
-  - component: {fileID: 1402291788}
   - component: {fileID: 1402291786}
   - component: {fileID: 1402291791}
   - component: {fileID: 1402291792}
   - component: {fileID: 1402291793}
+  - component: {fileID: 1402291794}
   m_Layer: 6
   m_Name: AI_Enemy
   m_TagString: Enemy
@@ -1082,23 +1000,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1402291788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1402291785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd0c16b9d03e1d7448f4b2c873de7404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AI_ChasingEnemy
-  player: {fileID: 947967069}
-  speed: 3
-  weapon: {fileID: 1381195846}
-  hp: 0
-  scaling: 0
 --- !u!4 &1402291789
 Transform:
   m_ObjectHideFlags: 0
@@ -1111,8 +1012,7 @@ Transform:
   m_LocalPosition: {x: 6.93, y: 1.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1381195847}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1402291791
@@ -1214,7 +1114,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 640
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1244,6 +1144,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
+--- !u!114 &1402291794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402291785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 216a64ce192ee8f488f96bf232b85e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  cost: 2
+  hp: 20
+  maxHp: 20
+  chests: []
+  roomPoints: []
+  dungeonCenteringShift: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
 --- !u!1 &1411303559
 GameObject:
   m_ObjectHideFlags: 0

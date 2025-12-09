@@ -306,8 +306,13 @@ public class PlayerManager : MonoBehaviour
     {
         this.leftWeapon = weapon;
         leftWeaponRenderer = weapon.GetComponent<SpriteRenderer>();
-        leftWeaponRenderer.flipX = spriteRenderer.flipX;
+        //leftWeaponRenderer.flipX = spriteRenderer.flipX;
         leftWeaponHitbox = weapon.GetComponent<BoxCollider2D>();
+        if (spriteRenderer.flipX)
+        {
+            this.leftWeapon.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+            leftWeaponRenderer.flipY = true;
+        }
     }
 
     public void SetRightWeapon(Weapon weapon)

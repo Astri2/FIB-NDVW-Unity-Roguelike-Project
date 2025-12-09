@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float hp;
 
+    [SerializeField] private float maxHp;
+
     [SerializeField] private List<Chest> chests = new();
 
     [SerializeField] private List<Vector2Int> roomPoints;
@@ -24,6 +26,13 @@ public class Enemy : MonoBehaviour
     {
         this.hp = hp;
         if (hp <= 0) death();
+    }
+
+    public float GetMaxHP() => maxHp;
+
+    public void SetMaxHP(float val)
+    {
+        this.maxHp = val;
     }
 
     public void AddChest(Chest chest) => chests.Add(chest);
