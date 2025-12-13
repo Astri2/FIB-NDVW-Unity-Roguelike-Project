@@ -2,7 +2,7 @@ using Edgar.Unity.Examples;
 using System.Collections;
 using UnityEngine;
 
-public class MeleeWeapon : Weapon
+public abstract class MeleeWeapon : Weapon
 {
     [SerializeField]
     private BoxCollider2D boxCollider;
@@ -26,14 +26,15 @@ public class MeleeWeapon : Weapon
         //Debug.Log("weapon timer : " + timer);
     }
 
-    public override void Attack()
+    public override bool Attack()
     {
         if (timer <= 0)
         {
             timer += cooldown;
-            base.Attack();
             StartCoroutine(AttackTimer());
+            return true;
         }
+        return false;
     }
 
     public void OnTriggerEnter2D(Collider2D collider)

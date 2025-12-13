@@ -26,7 +26,7 @@ public class Dash : MovementWeapon
         }
     }
 
-    public override void Attack()
+    public override bool Attack()
     {
         if (timer <= 0)
         {
@@ -35,7 +35,9 @@ public class Dash : MovementWeapon
             Debug.Log("movement");
 
             StartCoroutine(AttackTimer());
+            return true;
         }
+        return false
     }
 
     public IEnumerator AttackTimer()

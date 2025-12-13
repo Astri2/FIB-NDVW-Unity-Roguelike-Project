@@ -12,9 +12,8 @@ public class Sprint : MovementWeapon
         playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
     }
 
-    public override void Attack()
+    public override bool Attack()
     {
-        base.Attack();
         isSprinting = !isSprinting;
         if (isSprinting)
         {
@@ -24,5 +23,6 @@ public class Sprint : MovementWeapon
         {
             playerManager.SetMoveSpeed(5f);
         }
+        return true;
     }
 }

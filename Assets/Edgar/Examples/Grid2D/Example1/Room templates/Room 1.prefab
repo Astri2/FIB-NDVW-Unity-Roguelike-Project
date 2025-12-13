@@ -1638,34 +1638,42 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1915803139702524789}
     m_ColliderPaths:
-    - - X: 99999971
-        Y: -50000000
-      - X: 99999971
-        Y: 50000000
-      - X: -40000000
-        Y: 49999971
-      - X: -39999971
-        Y: -50000000
-    - - X: 90000000
-        Y: -39999971
-      - X: -30000000
-        Y: -39999971
-      - X: -29999971
-        Y: 40000000
-      - X: 90000000
-        Y: 39999971
+    - - X: 100000096
+        Y: -50000044
+      - X: 100000096
+        Y: 50000044
+      - X: 100000040
+        Y: 50000100
+      - X: -40000044
+        Y: 50000100
+      - X: -40000100
+        Y: 50000044
+      - X: -40000100
+        Y: -50000044
+      - X: -40000044
+        Y: -50000100
+      - X: 100000040
+        Y: -50000100
+    - - X: -29999900
+        Y: -39999900
+      - X: -29999900
+        Y: 39999900
+      - X: 89999904
+        Y: 39999900
+      - X: 89999904
+        Y: -39999900
   m_CompositePaths:
     m_Paths:
-    - - {x: 9.999997, y: 5}
-      - {x: -4, y: 4.999997}
-      - {x: -3.9999971, y: -5}
-      - {x: 9.999997, y: -5}
-    - - {x: -3, y: -3.9999971}
-      - {x: -2.9999971, y: 4}
-      - {x: 9, y: 3.9999971}
-      - {x: 9, y: -3.9999971}
+    - - {x: 10.000001, y: -5.00001}
+      - {x: 10.000001, y: 5.00001}
+      - {x: -4.00001, y: 5.0000014}
+      - {x: -4.0000014, y: -5.00001}
+    - - {x: 8.99999, y: -3.9999874}
+      - {x: -2.99999, y: -3.9999874}
+      - {x: -2.9999871, y: 3.99999}
+      - {x: 8.99999, y: 3.9999874}
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0
+  m_OffsetDistance: 0.000005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 5030905303629001096}
 --- !u!1 &7113793344524361711
@@ -1699,7 +1707,6 @@ Transform:
   m_Children:
   - {fileID: 234111249131340987}
   - {fileID: 588161950557602548}
-  - {fileID: 4441845374872072390}
   m_Father: {fileID: 2902912407082284469}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7930676080258142222
@@ -2918,6 +2925,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+<<<<<<< HEAD
+=======
 --- !u!1001 &6703265590934604545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2984,6 +2993,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6963218544976182215, guid: 088a0168fc53e4943ada00cade5a992a, type: 3}
   m_PrefabInstance: {fileID: 6703265590934604545}
   m_PrefabAsset: {fileID: 0}
+>>>>>>> AI_Enemies
 --- !u!1001 &7178149221173968764
 PrefabInstance:
   m_ObjectHideFlags: 0

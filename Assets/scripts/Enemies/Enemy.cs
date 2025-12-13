@@ -6,19 +6,19 @@ public class Enemy : MonoBehaviour
     ///////////////////////////
     // Common to all enemies //
     ///////////////////////////
-    [SerializeField] private int cost;
+    [SerializeField] protected int cost;
 
-    [SerializeField] private float hp;
+    [SerializeField] protected float hp;
 
     [SerializeField] private float maxHp;
 
     [SerializeField] private List<Chest> chests = new();
 
-    [SerializeField] private List<Vector2Int> roomPoints;
+    [SerializeField] protected List<Vector2Int> roomPoints;
 
-    [SerializeField] private Vector3 dungeonCenteringShift;
+    [SerializeField] protected Vector3 dungeonCenteringShift;
 
-    [SerializeField] private Transform player;
+    [SerializeField] protected Transform player;
 
     public int GetCost() => cost;
     public float GetHP() => hp;
@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
 
     public void AddChest(Chest chest) => chests.Add(chest);
 
+    protected List<Chest> GetChests() => chests;
+
     public void SetRoomPoints(List<Vector2Int> roomPoints) => this.roomPoints = roomPoints;
 
     public List<Vector2Int> GetRoomPoints() => roomPoints;
@@ -48,15 +50,4 @@ public class Enemy : MonoBehaviour
     public void SetPlayerTransform(Transform player) => this.player = player;
 
     public Transform GetPlayerTransform() => player;
-
-    public void death()
-    {
-        // allert the linked chests that the enemy is dead
-        foreach (Chest chest in chests)
-        {
-            chest.RemoveEnemy(this);
-        }
-        Destroy(this.gameObject);
-    }
-
 }

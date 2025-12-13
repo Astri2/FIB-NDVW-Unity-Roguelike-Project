@@ -10,14 +10,16 @@ public class Heal : DefensiveWeapon
         playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
     }
 
-    public override void Attack()
+    public override bool Attack()
     {
         if (timer <= 0)
         {
             timer += base.cooldown;
             base.Attack();
             StartCoroutine(AttackTimer());
+            return true;
         }
+        return false;
     }
 
     public IEnumerator AttackTimer()

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Spear : MeleeWeapon
 {
-    public override void Attack()
+    public override bool Attack()
     {
-        base.Attack();
+        return base.Attack();
     }
 }
