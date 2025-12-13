@@ -9,6 +9,16 @@ public class RangedChasingEnemy : ChasingEnemy
     [SerializeField] protected float attackRange = 5f;
     [SerializeField] protected BowEnemy bow;
 
+    public override void Start()
+    {
+        base.Start();
+    }
+
+    protected override void SetStateCallbacks()
+    {
+        base.SetStateCallbacks();
+    }
+
     protected override void Chasing()
     {
         // when chasing, the enemy aims to the player
@@ -54,8 +64,7 @@ public class RangedChasingEnemy : ChasingEnemy
 
             // Apply push to the desired position
             // TODO: check for path sefety?
-            targetHelper.position = desiredPosition + separation;
-            destSetter.target = targetHelper;
+            SetPathfindingDestination(desiredPosition + separation);
         }
     }
 }

@@ -16,7 +16,7 @@ public class EnemyHorizontalMovement : StateBasedEnemy
     protected override void SetStateCallbacks()
     {
         base.SetStateCallbacks();
-        stateCallbacks.Add(EnemyState_.Patrolling, new Action(PatrolingState));
+        RegisterState(EnemyState_.Patrolling, new Action(PatrolingState));
     }
 
     ///// States implementation

@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 3986202553696381933}
   - component: {fileID: 3986202553696381932}
   - component: {fileID: 7937811721403282766}
-  - component: {fileID: 3951911185794379094}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Knight
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -202,17 +201,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c772dac2beed1140a2e2e2438bdf38d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player2D
-  weapon: {fileID: 0}
---- !u!114 &3951911185794379094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3986202553696381928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1be994c48563814b9268869c76096e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement2D
   MoveSpeed: 5
+  hp: 0
+  maxHp: 0
+  leftWeapon: {fileID: 0}
+  rightWeapon: {fileID: 0}
+  spaceWeapon: {fileID: 0}
+  isParrying: 0
+  gameManager: {fileID: 0}
+  healthBar: {fileID: 0}
+  width: 0
+  height: 0
+  BarMelee: {fileID: 0}
+  CooldownBarMelee: {fileID: 0}
+  widthMelee: 0
+  heightMelee: 0
+  BarRanged: {fileID: 0}
+  CooldownBarRanged: {fileID: 0}
+  widthRanged: 0
+  heightRanged: 0
+  BarSpace: {fileID: 0}
+  CooldownBarSpace: {fileID: 0}
+  widthSpace: 0
+  heightSpace: 0
+  chestIndex: 0

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Pathfinding;
-using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(AIDestinationSetter))]
+[RequireComponent(typeof(AIPath))]
 public abstract class ChasingEnemy : StateBasedEnemy
 {
     [Header("Moving Speed")]
@@ -18,13 +19,6 @@ public abstract class ChasingEnemy : StateBasedEnemy
     [Header("Returning to spawn Settings")]
     [SerializeField] protected Vector3 spawnPoint;
 
-    [Header("Roaming Settings")]
-    [SerializeField] protected float roamingRadius = 2f;
-    [SerializeField] protected float roamingInterval = 3f;
-    [SerializeField] protected Vector3 roamingTarget;
-    [SerializeField] protected float pathFindTimer;
-    [SerializeField] protected float maxPathFindTimer = 8f;
-
     [Header("Patrol Settings")]
     [SerializeField] protected int patrolPointCount = 4;
     [SerializeField] protected Vector3[] patrolPoints;
@@ -37,6 +31,8 @@ public abstract class ChasingEnemy : StateBasedEnemy
     [SerializeField] protected Transform targetHelper;
     [SerializeField] protected float obstacleCheckRadius = 1.0f; // Safety check radius
     [SerializeField] protected int maxPointSelectionTries = 20;
+    [SerializeField] protected float pathFindTimer;
+    [SerializeField] protected float maxPathFindTimer = 8f;
 
     // --- NEW: SEPARATION SETTINGS ---
     [Header("Avoidance")]
@@ -92,7 +88,7 @@ public abstract class ChasingEnemy : StateBasedEnemy
     protected override void SetState(EnemyState_ enemyState)
     {
         base.SetState(enemyState);
-        aiPath.maxSpeed = (this.enemyState == EnemyState_.Chasing ? chasingSpeed : roamingSpeed);
+        //aiPath.maxSpeed = (this.GetState() == EnemyState_.Chasing ? chasingSpeed : roamingSpeed);
         aiPath.canMove = true; // reset the lock
     }
 
@@ -102,9 +98,9 @@ public abstract class ChasingEnemy : StateBasedEnemy
 
         if (!aiPath.hasPath || aiPath.reachedDestination || pathFindTimer <= 0f)
         {
-            if (Random.value < 0.5f)
+            if (Random.value < 0.3f)
             {
-                enemyState = EnemyState_.Patrolling;
+                SetState(EnemyState_.Patrolling);
                 return;
             }
 
@@ -123,11 +119,11 @@ public abstract class ChasingEnemy : StateBasedEnemy
 
         if (patrolPoints == null || patrolPoints.Length == 0) setPatrolingPoints();
         
-        if (!aiPath.hasPath || aiPath.reachedDestination)
+        if (!aiPath.hasPath || aiPath.reachedDestination || pathFindTimer <= 0)
         {
             if (Random.value < 0.3f)
             {
-                enemyState = EnemyState_.Roaming;
+                SetState(EnemyState_.Roaming);
                 return;
             }
 
@@ -146,8 +142,12 @@ public abstract class ChasingEnemy : StateBasedEnemy
             
     protected virtual void ReturningToSpawn()
     {
-        if (Vector2.Distance(transform.position, spawnPoint) < 0.2f)
-            enemyState = EnemyState_.Roaming;
+        pathFindTimer -= Time.deltaTime;
+
+        if (!aiPath.hasPath || aiPath.reachedDestination || pathFindTimer <= 0)
+        {
+            SetState(EnemyState_.Roaming);
+        }
     }
 
     protected abstract void Chasing();
@@ -160,9 +160,17 @@ public abstract class ChasingEnemy : StateBasedEnemy
         pathFindTimer = maxPathFindTimer;
     }
 
+    protected override void deadState()
+    {
+        Destroy(targetHelper.gameObject);
+        base.deadState();
+    }
+
     private void CheckPlayerVisibility()
     {
         if (player == null) return;
+
+        if (GetState() == EnemyState_.Stun) return;
 
         Vector2 direction = player.position - transform.position;
         float distance = direction.magnitude;
@@ -170,11 +178,25 @@ public abstract class ChasingEnemy : StateBasedEnemy
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction.normalized, detectionRange, obstacleMask);
         bool canSeePlayer = hit.collider == null || hit.collider.CompareTag("Player");
 
-        if (enemyState != EnemyState_.Chasing && distance < detectionRange && canSeePlayer)
-            enemyState = EnemyState_.Chasing;
+        if (GetState() != EnemyState_.Chasing && distance < detectionRange && canSeePlayer)
+            SetState(EnemyState_.Chasing);
 
-        else if (enemyState == EnemyState_.Chasing && (distance > losePlayerRange || !canSeePlayer))
-            enemyState = EnemyState_.ReturningToSpawn;
+        else if (GetState() == EnemyState_.Chasing && distance > losePlayerRange)
+        {
+            // try to find a way back to spawn
+            if (IsPathSafe(spawnPoint))
+            {
+                SetPathfindingDestination(spawnPoint);
+                SetState(EnemyState_.ReturningToSpawn);
+            }
+            // if you can't find a way, just roam
+            else
+            {
+                SetState(EnemyState_.Roaming);
+            }
+            
+        }
+            
     }
 
     private Vector3 getRandomPointInRoom()
@@ -220,8 +242,15 @@ public abstract class ChasingEnemy : StateBasedEnemy
         foreach (Vector3 offset in offsets)
         {
             var info = AstarPath.active.GetNearest(position + offset, NNConstraint.None);
-            if (info.node == null || !info.node.Walkable) return false;
+            if (info.node == null || !info.node.Walkable)
+            {
+                Debug.Log("Found a non safe path");
+                return false;
+            }
         }
+
+        Debug.Log("Found a safe path");
+
         return true;
     }
 
@@ -247,6 +276,8 @@ public abstract class ChasingEnemy : StateBasedEnemy
 
     protected Vector3 ComputeSeparationVector()
     {
+        return Vector3.zero;
+
         // Find neighbors
         int count = Physics2D.OverlapCircleNonAlloc(transform.position, separationRadius, separationBuffer, enemyLayerMask);
 
@@ -280,12 +311,5 @@ public abstract class ChasingEnemy : StateBasedEnemy
         currentSeparationVector = Vector3.Lerp(currentSeparationVector, separationForce, Time.deltaTime * separationSmoothing);
 
         return currentSeparationVector;
-    }
-
-    // --- NEW: Debug Gizmo ---
-    public void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, separationRadius);
     }
 }

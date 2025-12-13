@@ -2,22 +2,20 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum EnemyState_ { Roaming, Patrolling, Chasing, ReturningToSpawn, Dead, Stun }
 
 public abstract class StateBasedEnemy: Enemy
 {
-    private Dictionary<EnemyState_, Action> stateCallbacks;
+    private Dictionary<EnemyState_, Action> stateCallbacks = new();
 
-    protected EnemyState_ enemyState
-    {
-        get => enemyState;
-        set => SetState(value);
-    }
-
-    public virtual void Start()
+    [SerializeField] private EnemyState_ enemyState;
+    
+    public override void Start()
     {
         SetStateCallbacks();   
+        base.Start();
         enemyState = GetInitialState();
     }
 
@@ -60,6 +58,8 @@ public abstract class StateBasedEnemy: Enemy
         }
         Destroy(gameObject);
     }
+
+    protected EnemyState_ GetState() => this.enemyState;
 
     protected virtual void SetState(EnemyState_ enemyState) {
         this.enemyState = enemyState;

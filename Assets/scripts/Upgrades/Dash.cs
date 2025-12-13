@@ -31,13 +31,12 @@ public class Dash : MovementWeapon
         if (timer <= 0)
         {
             timer += base.cooldown;
-            base.Attack();
-            Debug.Log("movement");
+            // Debug.Log("movement");
 
             StartCoroutine(AttackTimer());
             return true;
         }
-        return false
+        return false;
     }
 
     public IEnumerator AttackTimer()

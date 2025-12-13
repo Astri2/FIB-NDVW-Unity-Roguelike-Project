@@ -652,9 +652,9 @@ MonoBehaviour:
   GenerateOn: 2
   ThrowExceptionsImmediately: 0
   DisableCustomPostProcessing: 0
-  minPathLength: 10
-  maxPathLength: 15
-  numberOfFeatures: 4
+  minPathLength: 3
+  maxPathLength: 3
+  numberOfFeatures: 0
   LoopWeight: 1
   BranchWeight: 4
   DeadEndWeight: 1
@@ -687,10 +687,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnEnemies
   enemies:
-  - {fileID: -7920275183799078765, guid: f8a85e5a15dd18e4b84882666c76f149, type: 3}
-  - {fileID: 6186176359985405568, guid: 46483537ef65f7043a97c7b8356c5f42, type: 3}
-  - {fileID: -3540149406593638917, guid: 3a5e4e35f54f6e348a17f9342b8bd7f7, type: 3}
-  - {fileID: 1979528207616040342, guid: 68a46d9f44f852b40b7a53d25097f67f, type: 3}
+  - {fileID: -3912850977486523235, guid: 46483537ef65f7043a97c7b8356c5f42, type: 3}
 --- !u!114 &1080008143
 MonoBehaviour:
   m_ObjectHideFlags: 0

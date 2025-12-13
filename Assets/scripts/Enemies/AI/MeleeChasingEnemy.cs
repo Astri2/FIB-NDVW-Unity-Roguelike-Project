@@ -30,7 +30,7 @@ public class MeleeChasingEnemy : ChasingEnemy
             // if the weapon was not on cooldown, you get stun for a moment
             if(weapon.Attack())
             {
-                enemyState = EnemyState_.Stun;
+                SetState(EnemyState_.Stun);
             }
         }
 
@@ -38,8 +38,6 @@ public class MeleeChasingEnemy : ChasingEnemy
         // 2. chase the player
         Vector3 desiredPosition = this.transform.position;
         bool shouldMove = false;
-
-        
 
         // try to get very close to they player so that hits will land
         if (distanceToPlayer > 0.5 * attackDistance)
@@ -55,8 +53,7 @@ public class MeleeChasingEnemy : ChasingEnemy
             Vector3 separation = base.ComputeSeparationVector();
 
             // Apply push to the desired position
-            targetHelper.position = desiredPosition + separation;
-            destSetter.target = targetHelper;
+            SetPathfindingDestination(desiredPosition + separation);
         }
     }
 
@@ -72,7 +69,7 @@ public class MeleeChasingEnemy : ChasingEnemy
         yield return new WaitForSeconds(delay);
 
         // if enemy got stunned, it means it was chasing the player
-        enemyState = EnemyState_.Chasing;
+        SetState(EnemyState_.Chasing);
         stunCoroutineRunning = false;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -18,10 +19,22 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] protected Transform player;
 
-    public int GetCost() => cost;
+    [SerializeField] private Slider HealthBar;
+
+    public int GetCost() { return cost; }
     public float GetHP() => hp;
-    public void SetHP(float hp) => this.hp = hp;
+    public void SetHP(float hp) {
+        this.hp = hp;
+        HealthBar.value = hp;
+    }
     public void AddChest(Chest chest) => chests.Add(chest);
+
+    public virtual void Start()
+    {
+        HealthBar = GetComponentInChildren<Slider>();
+        HealthBar.maxValue = hp;
+        HealthBar.value = hp;
+    }
 
     protected List<Chest> GetChests() => chests;
 
