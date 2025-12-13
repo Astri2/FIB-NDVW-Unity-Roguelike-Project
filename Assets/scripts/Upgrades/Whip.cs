@@ -1,9 +1,7 @@
-using UnityEngine;
-
 public class Whip : MeleeWeapon
 {
-    public override void Attack()
+    public override bool Attack()
     {
-        base.Attack();
+        return base.Attack();
     }
 }

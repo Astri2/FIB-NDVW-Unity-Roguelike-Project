@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
     public float damage;
     public float speed;
@@ -8,9 +8,7 @@ public class Weapon : MonoBehaviour
     public float cooldown;
     public float timer = 0;
 
-    public virtual void Attack()
-    {
-    }
+    public abstract bool Attack();
 
     public float GetCooldown()
     {

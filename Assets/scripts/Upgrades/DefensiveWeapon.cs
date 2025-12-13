@@ -10,12 +10,13 @@ public class DefensiveWeapon : Weapon
         }
     }
 
-    public override void Attack()
+    public override bool Attack()
     {
         if (timer <= 0)
         {
             timer += cooldown;
-            base.Attack();
+            return true;
         }
+        return false;
     }
 }

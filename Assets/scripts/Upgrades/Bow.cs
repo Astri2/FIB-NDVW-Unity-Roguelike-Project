@@ -23,8 +23,8 @@ public class Bow : RangedWeapon
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
     }
 
-    public override void Attack()
+    public override bool Attack()
     {
-        base.Attack();
+        return base.Attack();
     }
 }

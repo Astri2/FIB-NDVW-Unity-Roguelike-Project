@@ -3,11 +3,11 @@
 using System;
 using System.Collections.Generic;
 
-public enum EnemyState_ { Roaming, Patrolling, Chasing, ReturningToSpawn, Dead }
+public enum EnemyState_ { Roaming, Patrolling, Chasing, ReturningToSpawn, Dead, Stun }
 
 public abstract class StateBasedEnemy: Enemy
 {
-    protected Dictionary<EnemyState_, Action> stateCallbacks;
+    private Dictionary<EnemyState_, Action> stateCallbacks;
 
     protected EnemyState_ enemyState
     {
@@ -26,7 +26,12 @@ public abstract class StateBasedEnemy: Enemy
     protected virtual void SetStateCallbacks()
     {
         // default state, use as an example
-        stateCallbacks.Add(EnemyState_.Dead, new Action(deadState));
+        RegisterState(EnemyState_.Dead, new Action(deadState));
+    }
+
+    protected virtual void RegisterState(EnemyState_ state, Action action)
+    {
+        stateCallbacks.Add(state, action);
     }
 
     public void Update()

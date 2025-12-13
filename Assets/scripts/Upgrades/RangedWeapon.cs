@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RangedWeapon : Weapon
+public abstract class RangedWeapon : Weapon
 {
     [SerializeField]
     private GameObject projectile;
@@ -18,14 +18,15 @@ public class RangedWeapon : Weapon
         }
     }
 
-    public override void Attack()
+    public override bool Attack()
     {
         if (timer <= 0)
         {
             timer += cooldown;
-            base.Attack();
             GameObject.Instantiate(projectile, shotPos.position, transform.rotation);
+            return true;
         }
+        return false;
     }
 
     public new void Scale()

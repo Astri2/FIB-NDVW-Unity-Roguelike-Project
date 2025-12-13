@@ -1,9 +1,7 @@
-using UnityEngine;
-
 public class Sword : MeleeWeapon
 {
-    public override void Attack()
+    public override bool Attack()
     {
-        base.Attack();
+        return base.Attack();
     }
 }

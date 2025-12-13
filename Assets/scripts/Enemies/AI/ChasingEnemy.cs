@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Pathfinding;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class ChasingEnemy : StateBasedEnemy
@@ -21,7 +22,8 @@ public abstract class ChasingEnemy : StateBasedEnemy
     [SerializeField] protected float roamingRadius = 2f;
     [SerializeField] protected float roamingInterval = 3f;
     [SerializeField] protected Vector3 roamingTarget;
-    [SerializeField] protected float roamingTimer;
+    [SerializeField] protected float pathFindTimer;
+    [SerializeField] protected float maxPathFindTimer = 8f;
 
     [Header("Patrol Settings")]
     [SerializeField] protected int patrolPointCount = 4;
@@ -35,13 +37,23 @@ public abstract class ChasingEnemy : StateBasedEnemy
     [SerializeField] protected Transform targetHelper;
     [SerializeField] protected float obstacleCheckRadius = 1.0f; // Safety check radius
     [SerializeField] protected int maxPointSelectionTries = 20;
-    
+
+    // --- NEW: SEPARATION SETTINGS ---
+    [Header("Avoidance")]
+    [SerializeField] protected LayerMask enemyLayerMask;            // Select the layer your enemies are on
+    [SerializeField] protected float separationRadius = 1.5f;       // How close to check for neighbors
+    [SerializeField] protected float separationStrength = 5.0f;     // How hard to push away
+    [SerializeField] protected float separationSmoothing = 5.0f;    // Smoothing speed
+    [SerializeField] protected Vector3 currentFixedDestination;    // Where we want to go BEFORE separation
+    [SerializeField] protected Vector3 currentSeparationVector;    // Smoothed separation offset
+    [SerializeField] protected Collider2D[] separationBuffer = new Collider2D[10]; // Buffer for physics checks
 
     public override void Start()
     {
         base.Start();
         spawnPoint = transform.position;
-        
+        currentFixedDestination = transform.position;
+
         aiPath = GetComponent<AIPath>();
         destSetter = GetComponent<AIDestinationSetter>();
 
@@ -63,10 +75,10 @@ public abstract class ChasingEnemy : StateBasedEnemy
     protected override void SetStateCallbacks()
     {
         base.SetStateCallbacks();
-        stateCallbacks.Add(EnemyState_.Roaming, new System.Action(Roaming));
-        stateCallbacks.Add(EnemyState_.Patrolling, new System.Action(Patrolling));
-        stateCallbacks.Add(EnemyState_.ReturningToSpawn, new System.Action(ReturningToSpawn));
-        stateCallbacks.Add(EnemyState_.Chasing, new System.Action(Chasing));
+        RegisterState(EnemyState_.Roaming, new System.Action(Roaming));
+        RegisterState(EnemyState_.Patrolling, new System.Action(Patrolling));
+        RegisterState(EnemyState_.ReturningToSpawn, new System.Action(ReturningToSpawn));
+        RegisterState(EnemyState_.Chasing, new System.Action(Chasing));
     }
 
     protected override void PreUpdate()
@@ -81,13 +93,14 @@ public abstract class ChasingEnemy : StateBasedEnemy
     {
         base.SetState(enemyState);
         aiPath.maxSpeed = (this.enemyState == EnemyState_.Chasing ? chasingSpeed : roamingSpeed);
+        aiPath.canMove = true; // reset the lock
     }
 
     protected virtual void Roaming()
     {
-        roamingTimer -= Time.deltaTime;
+        pathFindTimer -= Time.deltaTime;
 
-        if (!aiPath.hasPath || aiPath.reachedDestination || roamingTimer <= 0f)
+        if (!aiPath.hasPath || aiPath.reachedDestination || pathFindTimer <= 0f)
         {
             if (Random.value < 0.5f)
             {
@@ -97,10 +110,17 @@ public abstract class ChasingEnemy : StateBasedEnemy
 
             if(!aiPath.pathPending) ChooseNewRoamingPoint();
         }
+
+        // change the enemy goal to avoid other enemies (steering)
+        Vector3 separation = ComputeSeparationVector();
+        targetHelper.position = currentFixedDestination + separation;
+        destSetter.target = targetHelper;
     }
         
     protected virtual void Patrolling()
     {
+        pathFindTimer -= Time.deltaTime;
+
         if (patrolPoints == null || patrolPoints.Length == 0) setPatrolingPoints();
         
         if (!aiPath.hasPath || aiPath.reachedDestination)
@@ -117,6 +137,11 @@ public abstract class ChasingEnemy : StateBasedEnemy
                 if (IsPathSafe(patrolPoints[patrolIndex])) SetPathfindingDestination(patrolPoints[patrolIndex]);
             }
         }
+
+        // change the enemy goal to avoid other enemies (steering)
+        Vector3 separation = ComputeSeparationVector();
+        targetHelper.position = currentFixedDestination + separation;
+        destSetter.target = targetHelper;
     }
             
     protected virtual void ReturningToSpawn()
@@ -129,8 +154,10 @@ public abstract class ChasingEnemy : StateBasedEnemy
 
     protected void SetPathfindingDestination(Vector3 pos)
     {
-        targetHelper.position = pos;
+        currentFixedDestination = pos; // serves as a backup to recover goal in case helper moves to avoid other enemies
+        targetHelper.position = currentFixedDestination;
         destSetter.target = targetHelper;
+        pathFindTimer = maxPathFindTimer;
     }
 
     private void CheckPlayerVisibility()
@@ -180,7 +207,7 @@ public abstract class ChasingEnemy : StateBasedEnemy
         SetPathfindingDestination(getRandomPointInRoom());
     }
 
-    private bool IsPathSafe(Vector3 position)
+    protected bool IsPathSafe(Vector3 position)
     {
         Vector3[] offsets = new Vector3[]
         {
@@ -216,5 +243,49 @@ public abstract class ChasingEnemy : StateBasedEnemy
 
         // order them by angle around the centroid. This should tend to generate a non crossing polygon
         patrolPoints = points.OrderBy(p => Mathf.Atan2(p.y - cy, p.x - cx)).ToArray();
+    }
+
+    protected Vector3 ComputeSeparationVector()
+    {
+        // Find neighbors
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, separationRadius, separationBuffer, enemyLayerMask);
+
+        Vector3 separationForce = Vector3.zero;
+
+        for (int i = 0; i < count; i++)
+        {
+            Collider2D col = separationBuffer[i];
+
+            // Skip self or non-enemies (though LayerMask should handle non-enemies)
+            if (col.gameObject == gameObject) continue;
+
+            // Calculate vector away from neighbor
+            Vector3 dir = transform.position - col.transform.position;
+            float dist = dir.magnitude;
+
+            // Avoid division by zero
+            if (dist < 0.01f) dist = 0.01f;
+
+            // The closer they are, the stronger the push
+            float strength = 1f - (dist / separationRadius);
+            separationForce += dir.normalized * strength;
+        }
+
+        if (separationForce != Vector3.zero)
+        {
+            separationForce = separationForce.normalized * separationStrength;
+        }
+
+        // Smooth the result
+        currentSeparationVector = Vector3.Lerp(currentSeparationVector, separationForce, Time.deltaTime * separationSmoothing);
+
+        return currentSeparationVector;
+    }
+
+    // --- NEW: Debug Gizmo ---
+    public void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, separationRadius);
     }
 }
