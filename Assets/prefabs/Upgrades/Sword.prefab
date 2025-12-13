@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5908520732015841652}
   - component: {fileID: 5093272836496554736}
   - component: {fileID: 100133446319565061}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7beefdb62dee5f348909cbc61735517b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Sword
-  cooldown: 1
-  timer: 0
   damage: 5
   speed: 1
+  cooldown: 1
+  timer: 0
   boxCollider: {fileID: 5093272836496554736}
   animator: {fileID: 100133446319565061}
   isAttacking: 0
