@@ -1,6 +1,0 @@
-﻿<Solution>
-  <Project Path="Edgar.Unity.csproj" />
-  <Project Path="Edgar.Unity.Editor.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="Edgar.Unity.Examples.csproj" />
-</Solution>

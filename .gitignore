@@ -38,10 +38,13 @@
 # Jetbrains cache directory
 ./idea
 
-# Visual Studio code cache directory
+# Visual Studio code cache directory & other stuff
+./vscode
+FIB-NDVW-Unity-Roguelike-Project.slnx
 .vscode/
 .csproj
 *.slnx
+.DS_Store
 
 # Gradle cache directory
 .gradle/

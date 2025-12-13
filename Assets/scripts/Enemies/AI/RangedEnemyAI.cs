@@ -38,7 +38,6 @@ public class RangedEnemyAI : MonoBehaviour
     // ----------------------------
 
     [Header("Wander Limits")]
-    public int maxWanderSteps = 100;
     private int currentWanderStep = 0;
 
     // private float fireCooldown;
@@ -46,7 +45,6 @@ public class RangedEnemyAI : MonoBehaviour
     private AIDestinationSetter destSetter;
 
     private bool isWandering = false;
-    private bool finishedWandering = false;
 
     private Transform targetHelper; // Reusable transform for movement targets
 
@@ -178,12 +176,6 @@ public class RangedEnemyAI : MonoBehaviour
     // ==============================================
     private void HandleWandering()
     {
-        if (finishedWandering)
-        {
-            aiPath.canMove = false;
-            return;
-        }
-
         aiPath.canMove = true;
 
         if (!isWandering)
@@ -215,12 +207,6 @@ public class RangedEnemyAI : MonoBehaviour
     {
         // --- NEW: Reset timer ---
         wanderTimer = 0f;
-
-        if (currentWanderStep >= maxWanderSteps)
-        {
-            finishedWandering = true;
-            return;
-        }
 
         for (int i = 0; i < wanderRetries; i++)
         {

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3662781848479947821}
   m_Layer: 0
   m_Name: GreenMaskedOrc
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -205,14 +205,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 2
-  roomPoints: []
-  player: {fileID: 0}
-  speed: 1
-  weapon: {fileID: 1802416245104910898}
   hp: 10
-  scaling: 0
-  rb: {fileID: 6963218544976182210}
   chests: []
+  roomPoints: []
+  dungeonCenteringShift: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
 --- !u!61 &7094700343968139093
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -386,14 +383,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8466306015589503997, guid: a900a6917b391df418118b0e266143e0, type: 3}
   m_PrefabInstance: {fileID: 8496994627201143081}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1802416245104910898 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7847552717561344795, guid: a900a6917b391df418118b0e266143e0, type: 3}
-  m_PrefabInstance: {fileID: 8496994627201143081}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7beefdb62dee5f348909cbc61735517b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Sword
