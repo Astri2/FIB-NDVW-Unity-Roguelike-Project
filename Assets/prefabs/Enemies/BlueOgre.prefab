@@ -14,12 +14,11 @@ GameObject:
   - component: {fileID: 2179296400991150107}
   - component: {fileID: 2179296400991150106}
   - component: {fileID: 5875874749273824696}
-  - component: {fileID: 1732079184595502178}
   - component: {fileID: 3076151149579114688}
   - component: {fileID: 7216058980565464401}
   - component: {fileID: 4361290034676904345}
   - component: {fileID: -3943770257332690777}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlueOgre
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -89,7 +88,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 38b9015679fd19e4a9c2ed199c98a094, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -153,7 +152,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -226,59 +225,13 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 1.5}
+  m_Offset: {x: 0, y: -0.13627255}
+  m_Size: {x: 1, y: 1.2274549}
   m_Direction: 0
---- !u!61 &1732079184595502178
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2179296400991150110}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6, y: 1.6}
-    newSize: {x: 1.6, y: 1.6}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 8, y: 8}
-  m_EdgeRadius: 0
 --- !u!114 &3076151149579114688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,11 +330,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeChasingEnemy
   cost: 12
   hp: 50
+  maxHp: 50
   chests: []
   roomPoints: []
   dungeonCenteringShift: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   HealthBar: {fileID: 0}
+  flip: 0
+  enemyRenderer: {fileID: 2179296400991150109}
   enemyState: 0
   roamingSpeed: 2
   chasingSpeed: 3
@@ -422,6 +378,8 @@ MonoBehaviour:
   - {fileID: 0}
   attackDistance: 1.2
   weapon: {fileID: 395987878583597666}
+  weaponHitbox: {fileID: 4028903566968666315}
+  weaponRenderer: {fileID: 1733467797853543893}
   stunTimer: 5
   stunCoroutineRunning: 0
 --- !u!1001 &2255161701716814353
@@ -432,6 +390,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2179296400991150111}
     m_Modifications:
+    - target: {fileID: 523950661143295940, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2928038962270163674, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -439,6 +401,10 @@ PrefabInstance:
     - target: {fileID: 4730414138602445529, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
       propertyPath: m_Name
       value: Spear
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730414138602445529, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
       propertyPath: m_LocalPosition.x
@@ -496,6 +462,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6e5633e20b72746845f5b1853951e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spear
+--- !u!212 &1733467797853543893 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 523950661143295940, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
+  m_PrefabInstance: {fileID: 2255161701716814353}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &4028903566968666315 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2928038962270163674, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
+  m_PrefabInstance: {fileID: 2255161701716814353}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7125222360922099272 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9055101003343062105, guid: 3976757f8ef70c2469c7c466008bd061, type: 3}
@@ -517,9 +493,33 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 989031775877302499, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1428858706611584523, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
       propertyPath: m_Name
       value: HealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428858706611584523, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1982771516888694199, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2968697721126127585, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5717449871722564088, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346141140006811939, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8460622563574242696, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
       propertyPath: m_Pivot.x
@@ -600,6 +600,10 @@ PrefabInstance:
     - target: {fileID: 8460622563574242696, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8953497223172465180, guid: 63c18046a8e4e6d4fa286123a38c3a6e, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

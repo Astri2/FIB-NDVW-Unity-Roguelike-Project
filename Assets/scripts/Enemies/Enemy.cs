@@ -23,6 +23,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Slider HealthBar;
 
+    public bool flip;
+    [SerializeField] public SpriteRenderer enemyRenderer;
+
     public int GetCost() { return cost; }
     public float GetHP() => hp;
     public void SetHP(float hp) {
@@ -44,6 +47,20 @@ public class Enemy : MonoBehaviour
         HealthBar = GetComponentInChildren<Slider>();
         HealthBar.maxValue = hp;
         HealthBar.value = hp;
+    }
+
+    public void FixedUpdate()
+    {
+        if (player.transform.position.x < this.transform.position.x)
+        {
+            enemyRenderer.flipX = true;
+            flip = true;
+        }
+        else
+        {
+            enemyRenderer.flipX = false;
+            flip = false;
+        }
     }
 
     protected List<Chest> GetChests() => chests;

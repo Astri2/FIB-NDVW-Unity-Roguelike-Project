@@ -1,6 +1,8 @@
 using Edgar.Unity.Examples;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System.Collections;
+using TMPro;
 
 /// <summary>
 /// Very simple implementation of a player that can interact with objects.
@@ -68,12 +70,13 @@ public class PlayerManager : MonoBehaviour
 
     public int chestIndex = 0;
 
+    private TextMeshProUGUI pickup;
+
     public void Start()
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody = GetComponent<Rigidbody2D>();
-        maxHp = 20;
         hp = maxHp;
 
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<ChestManager>();
@@ -85,6 +88,8 @@ public class PlayerManager : MonoBehaviour
         CooldownBarRanged = gameManager.CooldownBarRanged;
         BarSpace = gameManager.BarSpace;
         CooldownBarSpace = gameManager.CooldownBarSpace;
+
+        pickup = gameManager.pickup;
 
         Camera.main.transform.SetParent(transform, false);
     }
@@ -312,6 +317,7 @@ public class PlayerManager : MonoBehaviour
             this.leftWeapon.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
             leftWeaponRenderer.flipY = true;
         }
+        StartCoroutine(ShowLabel(weapon.name));
     }
 
     public void SetRightWeapon(Weapon weapon)
@@ -319,11 +325,13 @@ public class PlayerManager : MonoBehaviour
         this.rightWeapon = weapon;
         rightWeaponRenderer = weapon.GetComponentInChildren<SpriteRenderer>();
         //rightWeaponRenderer.flipX = spriteRenderer.flipX;
+        StartCoroutine(ShowLabel(weapon.name));
     }
 
     public void SetSpaceWeapon(Weapon weapon)
     {
         this.spaceWeapon = weapon;
+        StartCoroutine(ShowLabel(weapon.name));
     }
 
     public float GetHP()
@@ -370,5 +378,15 @@ public class PlayerManager : MonoBehaviour
     {
         Destroy(this.gameObject);
         SceneManager.LoadScene("DeathMenu");
+    }
+
+    public IEnumerator ShowLabel(string label)
+    {
+        int index = label.IndexOf("(");
+        if(index >= 0)label = label.Substring(0, index);
+        pickup.enabled = true;
+        pickup.text = "Picked up: " + label;
+        yield return new WaitForSeconds(2);
+        pickup.enabled = false;
     }
 }

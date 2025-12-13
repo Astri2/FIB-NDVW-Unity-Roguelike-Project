@@ -78,7 +78,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 12b95add26f07c445922c2ec47bb471a, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -136,9 +136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1fe51e930b98e48bbaa97995a34f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bow
+  damage: 0
+  speed: 1
   cooldown: 1
   timer: 0
-  speed: 1
   projectile: {fileID: 5383575032014085527, guid: 00ee1aae85295314c9eacd6b6cf1dc98, type: 3}
   shotPos: {fileID: 1682340705809057839}
   projScript: {fileID: -6705096782060842936, guid: 00ee1aae85295314c9eacd6b6cf1dc98, type: 3}

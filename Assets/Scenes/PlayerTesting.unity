@@ -1163,6 +1163,7 @@ MonoBehaviour:
   roomPoints: []
   dungeonCenteringShift: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
+  HealthBar: {fileID: 0}
 --- !u!1 &1411303559
 GameObject:
   m_ObjectHideFlags: 0

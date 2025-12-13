@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f563f50d8c16e6643b76e342be7a2ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTransition
-  SceneName: HeadlessGeneratorScene
+  SceneName: HeadlessPlayerAI
 --- !u!1 &910478847
 GameObject:
   m_ObjectHideFlags: 0

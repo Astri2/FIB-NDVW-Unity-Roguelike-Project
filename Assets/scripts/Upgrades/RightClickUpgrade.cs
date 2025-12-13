@@ -65,6 +65,11 @@ public class RightClickUpgrade : Upgrade
                     Player.GetRightWeapon().Scale();
                 }
             }
+            Player.SetHP(Player.GetHP() + Player.GetMaxHP() * 0.1f);
+            if (Player.GetHP() > Player.GetMaxHP())
+            {
+                Player.SetHP(Player.GetMaxHP());
+            }
             Destroy(this.gameObject);
         }
     }

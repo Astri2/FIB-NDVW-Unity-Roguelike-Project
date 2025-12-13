@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ChestManager : MonoBehaviour
@@ -26,6 +27,8 @@ public class ChestManager : MonoBehaviour
     public RectTransform BarSpace;
     public RectTransform CooldownBarSpace;
     public float widthSpace, heightSpace;
+
+    public TextMeshProUGUI pickup;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -58,16 +61,12 @@ public class ChestManager : MonoBehaviour
 
     public IEnumerator EnemyScaling()
     {
-        yield return null;
-        /*
         for(;;)
         {
-            foreach (Enemies enemy in Enemies) {
-                enemy.SetHP(enemy.GetHP() * 1.2f);
-                enemy.GetWeapon().Scale();
+            yield return new WaitForSeconds(45);
+            foreach (Enemy enemy in Enemies) {
+                enemy.SetHP(enemy.GetHP() * 1.1f);
             }
-            yield return new WaitForSeconds(30);
         }
-        */
     }
 }

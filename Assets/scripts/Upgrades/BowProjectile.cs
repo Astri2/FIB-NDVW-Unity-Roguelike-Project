@@ -21,10 +21,14 @@ public class BowProjectile : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Enemy en = collision.gameObject.GetComponent<Enemy>();
             en.SetHP(en.GetHP() - this.damage);
+            DestroyProjectile();
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        {
             DestroyProjectile();
         }
     }

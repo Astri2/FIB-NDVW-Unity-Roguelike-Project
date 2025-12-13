@@ -5,19 +5,35 @@ public class MeleeChasingEnemy : ChasingEnemy
 {
     [Header("Combat")]
     [SerializeField] protected float attackDistance;
-    [SerializeField] protected MeleeWeapon weapon;
+    [SerializeField] protected Weapon weapon;
+    [SerializeField] protected BoxCollider2D weaponHitbox;
+    [SerializeField] protected SpriteRenderer weaponRenderer;
     [SerializeField] protected float stunTimer; // gets stun after landing an attack
     [SerializeField] protected bool stunCoroutineRunning;
+
+    private bool prevFlip;
 
     public override void Start()
     {
         base.Start();
+        prevFlip = false;
     }
 
     protected override void SetStateCallbacks()
     {
         base.SetStateCallbacks();
         RegisterState(EnemyState_.Stun, new System.Action(Stun));
+    }
+
+    public void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (flip != prevFlip)
+        {
+            weaponHitbox.offset = -weaponHitbox.offset;
+            weaponRenderer.flipX = !weaponRenderer.flipX;
+        }
+        prevFlip = flip;
     }
 
     protected override void Chasing()
@@ -40,7 +56,7 @@ public class MeleeChasingEnemy : ChasingEnemy
         bool shouldMove = false;
 
         // try to get very close to they player so that hits will land
-        if (distanceToPlayer > 0.5 * attackDistance)
+        if (distanceToPlayer > attackDistance)
         {
             desiredPosition = player.position;
             shouldMove = true;
@@ -71,5 +87,10 @@ public class MeleeChasingEnemy : ChasingEnemy
         // if enemy got stunned, it means it was chasing the player
         SetState(EnemyState_.Chasing);
         stunCoroutineRunning = false;
+    }
+
+    public Weapon GetWeapon()
+    {
+        return weapon;
     }
 }

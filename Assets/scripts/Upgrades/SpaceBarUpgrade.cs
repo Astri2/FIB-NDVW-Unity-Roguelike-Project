@@ -56,6 +56,11 @@ public class SpaceBarUpgrade : Upgrade
                 Player.GetSpaceWeapon().Scale();
                 Player.ScaleHP();
             }
+            Player.SetHP(Player.GetHP() + Player.GetMaxHP() * 0.1f);
+            if (Player.GetHP() > Player.GetMaxHP())
+            {
+                Player.SetHP(Player.GetMaxHP());
+            }
             Destroy(this.gameObject);
         }
     }
