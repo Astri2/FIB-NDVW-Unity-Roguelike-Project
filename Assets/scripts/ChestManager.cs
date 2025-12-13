@@ -31,6 +31,11 @@ public class ChestManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(EnemyScaling());
+
+        //healthBar.localScale = new Vector3(0, 0, 0);
+        BarMelee.localScale = new Vector3(0, 0, 0);
+        BarRanged.localScale = new Vector3(0, 0, 0);
+        BarSpace.localScale = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame

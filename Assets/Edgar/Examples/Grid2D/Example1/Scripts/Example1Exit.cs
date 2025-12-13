@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Edgar.Unity.Examples.Example1
 {
@@ -16,7 +17,7 @@ namespace Edgar.Unity.Examples.Example1
         {
             if (InputHelper.GetKey(KeyCode.E))
             {
-                Example1GameManager.Instance.LoadNextLevel();
+                SceneManager.LoadScene("Victory");
             }
         }
 

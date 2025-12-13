@@ -16,18 +16,17 @@ public class BowProjectile : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, distance, layerMask);
-        if(hit.collider != null)
-        {
-            if (hit.collider.GetType() == typeof(CapsuleCollider2D) && hit.collider.CompareTag("Enemy"))
-            {
-                Enemy en = hit.collider.GetComponent<Enemy>();
-                en.SetHP(en.GetHP() - this.damage);
-                DestroyProjectile();
-            }
-        }
-
         this.transform.Translate(Vector2.up * speed * Time.deltaTime);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            Enemy en = collision.gameObject.GetComponent<Enemy>();
+            en.SetHP(en.GetHP() - this.damage);
+            DestroyProjectile();
+        }
     }
 
     public void DestroyProjectile()
