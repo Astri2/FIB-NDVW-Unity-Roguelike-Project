@@ -1,5 +1,5 @@
 using Edgar.Unity.Examples;
-using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 /// <summary>
@@ -166,7 +166,6 @@ public class PlayerManager : MonoBehaviour
             CooldownBarSpace.sizeDelta = new Vector2(newWidth, heightSpace);
         }
 
-
         if (InputHelper.GetKeyDown(KeyCode.Mouse0) && !isParrying)
         {
             LeftAttack();
@@ -181,7 +180,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (hp <= 0)
         {
-            Destroy(this.gameObject);
+            PlayerDeath();
         }
     }
     public void FixedUpdate()
@@ -365,5 +364,11 @@ public class PlayerManager : MonoBehaviour
     public void SetParrying(bool val)
     {
         this.isParrying = val;
+    }
+
+    public void PlayerDeath()
+    {
+        Destroy(this.gameObject);
+        SceneManager.LoadScene("DeathMenu");
     }
 }

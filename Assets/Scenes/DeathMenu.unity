@@ -246,7 +246,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 282}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &807559392
 MonoBehaviour:
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DCPG
+  m_text: You died :(
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 52ef02d19da273241bf81b7423f73e32, type: 2}
   m_sharedMaterial: {fileID: 5320400037466404887, guid: 52ef02d19da273241bf81b7423f73e32, type: 2}
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Play Game
+  m_text: Retry
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 52ef02d19da273241bf81b7423f73e32, type: 2}
   m_sharedMaterial: {fileID: 5320400037466404887, guid: 52ef02d19da273241bf81b7423f73e32, type: 2}
@@ -1154,7 +1154,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7443756053782179069, guid: 9653d3e5087a1024ebf18505deccf63b, type: 3}
+  m_Sprite: {fileID: -3756954794138328576, guid: 706498ad5230b1648b8d26c4a5981b7d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

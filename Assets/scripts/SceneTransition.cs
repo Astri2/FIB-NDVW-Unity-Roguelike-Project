@@ -8,4 +8,9 @@ public class SceneTransition : MonoBehaviour
     {
         SceneManager.LoadScene(SceneName);
     }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 }
