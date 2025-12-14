@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!224 &142074568 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1852968844843185308, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &172117480
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,22 +186,22 @@ MonoBehaviour:
   ChestList: []
   Enemies: []
   index: 0
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 1514634736}
   width: 300
   height: 40
-  BarMelee: {fileID: 0}
-  CooldownBarMelee: {fileID: 0}
+  BarMelee: {fileID: 377526120}
+  CooldownBarMelee: {fileID: 1806857488}
   widthMelee: 300
   heightMelee: 20
-  BarRanged: {fileID: 0}
-  CooldownBarRanged: {fileID: 0}
+  BarRanged: {fileID: 813656416}
+  CooldownBarRanged: {fileID: 726319279}
   widthRanged: 300
   heightRanged: 20
-  BarSpace: {fileID: 0}
-  CooldownBarSpace: {fileID: 0}
+  BarSpace: {fileID: 142074568}
+  CooldownBarSpace: {fileID: 1774080539}
   widthSpace: 300
   heightSpace: 20
-  pickup: {fileID: 0}
+  pickup: {fileID: 297810426}
 --- !u!1001 &297810424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -205,6 +210,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1668411814636997098, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6852991785683488669, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -297,6 +306,22 @@ PrefabInstance:
 --- !u!1 &297810425 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8593864496038156608, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &297810426 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6344783023595585645, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!224 &377526120 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3221218546207298241, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
   m_PrefabInstance: {fileID: 297810424}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &477734463
@@ -464,6 +489,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &726319279 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7068289429427472236, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &813656416 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8493316507275144526, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1080008139
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +616,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71df2668bd2b94f04b7b54f7767f3ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AstarRescanWatcher
+--- !u!224 &1514634736 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9048691957148555447, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1774080539 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7227559855355814879, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1806857488 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2440024074268233990, guid: d006b9fa04c8ad3429ed90f1a1d3774f, type: 3}
+  m_PrefabInstance: {fileID: 297810424}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
