@@ -296,7 +296,7 @@ MonoBehaviour:
   weapon: {fileID: 1802416245104910898}
   weaponHitbox: {fileID: 3694520907977452505}
   weaponRenderer: {fileID: 2599751079791935581}
-  stunTimer: 5
+  stunTimer: 2
   stunCoroutineRunning: 0
 --- !u!114 &6017554807563316118
 MonoBehaviour:

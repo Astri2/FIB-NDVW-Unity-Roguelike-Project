@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7927f8e345613de46bd9bcb913d91c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Heal
-  cooldown: 2
-  timer: 0
+  damage: 0
   speed: 1
+  cooldown: 12
+  timer: 0
   playerManager: {fileID: 0}

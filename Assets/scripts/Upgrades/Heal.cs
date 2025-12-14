@@ -26,6 +26,9 @@ public class Heal : DefensiveWeapon
     {
         playerManager.GetRenderer().color = Color.green;
         playerManager.SetHP(playerManager.GetHP() + Mathf.Min(playerManager.GetMaxHP()*0.3f, 8f));
+        if(playerManager.GetHP() > playerManager.GetMaxHP()) {
+            playerManager.SetHP(playerManager.GetMaxHP());
+        }
         yield return new WaitForSeconds(0.2f);
         playerManager.GetRenderer().color = Color.white;
     }

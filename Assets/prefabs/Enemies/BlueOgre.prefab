@@ -380,7 +380,7 @@ MonoBehaviour:
   weapon: {fileID: 395987878583597666}
   weaponHitbox: {fileID: 4028903566968666315}
   weaponRenderer: {fileID: 1733467797853543893}
-  stunTimer: 5
+  stunTimer: 4
   stunCoroutineRunning: 0
 --- !u!1001 &2255161701716814353
 PrefabInstance:

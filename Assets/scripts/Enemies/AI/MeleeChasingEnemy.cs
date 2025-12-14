@@ -75,13 +75,13 @@ public class MeleeChasingEnemy : ChasingEnemy
 
     protected virtual void Stun()
     {
+        this.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector3.zero;
         if (!stunCoroutineRunning) StartCoroutine(StunCoroutine(stunTimer));
     }
 
     private IEnumerator StunCoroutine(float delay)
     {
         stunCoroutineRunning = true;
-
         yield return new WaitForSeconds(delay);
 
         // if enemy got stunned, it means it was chasing the player

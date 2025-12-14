@@ -33,10 +33,10 @@ public class HeadlessGameManager : GameManagerBase<HeadlessGameManager>
 
     public void Update()
     {
-        if (InputHelper.GetKeyDown(KeyCode.G))
+        /*if (InputHelper.GetKeyDown(KeyCode.G))
         {
             LoadNextLevel();
-        }
+        }*/
     }
 
     public override void LoadNextLevel()

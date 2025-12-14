@@ -170,5 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RightClickUpgrade
   WeaponItem:
   - {fileID: 8957787471043487718, guid: fa92819bf9a802847bca7ce6baedbbc1, type: 3}
+  - {fileID: 3902898774683985026, guid: 2d4fa8f2f202eff4fb2f93f278107fb4, type: 3}
+  - {fileID: 4535658936338397025, guid: 530e793ccb6128a42a305ef4cc2d8ccf, type: 3}
   Player: {fileID: 0}
   AlreadyCollected: 0
