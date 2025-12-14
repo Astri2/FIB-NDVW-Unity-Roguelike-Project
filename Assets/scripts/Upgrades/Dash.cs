@@ -1,0 +1,48 @@
+using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class Dash : MovementWeapon
+{
+    [SerializeField]
+    private PlayerManager playerManager;
+    [SerializeField]
+    private float distance;
+    [SerializeField]
+    private Rigidbody2D rb;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
+        rb = playerManager.GetComponent<Rigidbody2D>();
+    }
+
+    void FixedUpdate()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.fixedDeltaTime * speed;
+        }
+    }
+
+    public override bool Attack()
+    {
+        if (timer <= 0)
+        {
+            timer += base.cooldown;
+            // Debug.Log("movement");
+
+            StartCoroutine(AttackTimer());
+            return true;
+        }
+        return false;
+    }
+
+    public IEnumerator AttackTimer()
+    {
+        playerManager.SetMoveSpeed(5 * distance);
+        yield return new WaitForSeconds(0.1f);
+        playerManager.SetMoveSpeed(5f);
+    }
+}

@@ -1,0 +1,50 @@
+using UnityEngine;
+
+public class BowProjectile : MonoBehaviour
+{
+    public float damage;
+    public float speed;
+    public float lifetime;
+    public float distance;
+    public LayerMask layerMask;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void Start()
+    {
+        Invoke("DestroyProjectile", lifetime);
+    }
+
+    // Update is called once per frame
+    public void Update()
+    {
+        this.transform.Translate(Vector2.up * speed * Time.deltaTime);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Enemy en = collision.gameObject.GetComponent<Enemy>();
+            en.SetHP(en.GetHP() - this.damage);
+            DestroyProjectile();
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Walls"))
+        {
+            DestroyProjectile();
+        }
+    }
+
+    public void DestroyProjectile()
+    {
+        Destroy(gameObject);
+    }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public void SetDamage(float val)
+    {
+        damage = val;
+    }
+}
