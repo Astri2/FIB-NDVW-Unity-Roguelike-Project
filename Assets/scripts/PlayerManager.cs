@@ -90,8 +90,6 @@ public class PlayerManager : MonoBehaviour
         CooldownBarSpace = gameManager.CooldownBarSpace;
 
         pickup = gameManager.pickup;
-
-        Camera.main.transform.SetParent(transform, false);
     }
 
     /// <summary>

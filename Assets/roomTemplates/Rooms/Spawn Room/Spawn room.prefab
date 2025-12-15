@@ -2747,6 +2747,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9204587858199253960}
     m_Modifications:
+    - target: {fileID: 811232076706406510, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8641248779315582602, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.02
@@ -2790,6 +2794,10 @@ PrefabInstance:
     - target: {fileID: 8641248779315582605, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
       propertyPath: m_Name
       value: Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 8641248779315582605, guid: 26e3a11d63332e247856778e5f838b0a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
