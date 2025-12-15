@@ -2,7 +2,7 @@
 using Edgar.Unity;
 using UnityEngine;
 
-class HeadlessDungeonGeneratorGrid2D: DungeonGeneratorBaseGrid2D
+public class HeadlessDungeonGeneratorGrid2D: DungeonGeneratorBaseGrid2D
 {
     private HeadlessGraph headlessGraph;
 

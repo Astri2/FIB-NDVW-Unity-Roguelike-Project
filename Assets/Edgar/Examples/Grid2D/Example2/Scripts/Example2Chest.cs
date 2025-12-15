@@ -1,5 +1,4 @@
-﻿using Codice.Client.Common;
-using UnityEngine;
+﻿using UnityEngine;
 using Edgar.Unity.Examples;
 
 

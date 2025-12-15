@@ -144,7 +144,8 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -810,11 +811,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 7e75bc6e-aec4-4a27-b963-d311aeb7fee8
+  cloudProjectId: e172c724-fe75-4b21-8d28-fe11d3d949fc
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: Dungeon Crawler RogueLike
-  organizationId: malo-thiebaud
+  organizationId: kikinder
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
