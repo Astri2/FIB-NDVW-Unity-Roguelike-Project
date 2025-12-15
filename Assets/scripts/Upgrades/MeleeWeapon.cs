@@ -39,7 +39,7 @@ public abstract class MeleeWeapon : Weapon
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("weapon hit");
+        //Debug.Log("weapon hit");
         PlayerManager w = collider.gameObject.GetComponent<PlayerManager>();
         Enemy enemy = collider.gameObject.GetComponent<Enemy>();
         if (w != null && isAttacking && !(w.IsParrying()))
@@ -47,7 +47,7 @@ public abstract class MeleeWeapon : Weapon
             w.SetHP(w.GetHP() - this.damage);
         }
         else if (enemy != null && isAttacking) {
-            Debug.Log("enemy took a hit");
+            //Debug.Log("enemy took a hit");
             enemy.SetHP(enemy.GetHP() - this.damage);
         }
     }

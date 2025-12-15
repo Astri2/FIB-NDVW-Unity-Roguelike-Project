@@ -244,12 +244,12 @@ public abstract class ChasingEnemy : StateBasedEnemy
             var info = AstarPath.active.GetNearest(position + offset, NNConstraint.None);
             if (info.node == null || !info.node.Walkable)
             {
-                Debug.Log("Found a non safe path");
+                //Debug.Log("Found a non safe path");
                 return false;
             }
         }
 
-        Debug.Log("Found a safe path");
+        //Debug.Log("Found a safe path");
 
         return true;
     }

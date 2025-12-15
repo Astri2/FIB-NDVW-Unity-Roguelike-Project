@@ -86,10 +86,7 @@ public class SpawnEnemies : DungeonGeneratorPostProcessingComponentGrid2D
                 Enemy enemy = enemyCandidates[Random.Next(0, nbCandidates)];
                 choosenEnemies.Add(enemy.gameObject);
                 budgetRoom -= enemy.GetCost();
-
-                Debug.Log("passe");
             }
-            Debug.Log("fin");
 
             // decide on spawn points
 
